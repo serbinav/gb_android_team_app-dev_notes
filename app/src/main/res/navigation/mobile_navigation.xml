@@ -22,4 +22,10 @@
         android:name="com.example.notesvsshoppinglist.ui.notifications.CalendarFragment"
         android:label="@string/title_calendar"
         tools:layout="@layout/fragment_calendar" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.example.notesvsshoppinglist.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>
