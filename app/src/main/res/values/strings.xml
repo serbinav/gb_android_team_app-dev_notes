@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">NotesVsShoppingList</string>
-    <string name="title_home">Мои Заметки</string>
-    <string name="title_dashboard">Мои Списки</string>
-    <string name="title_notifications">Календарь</string>
+    <string name="title_notes">Мои Заметки</string>
+    <string name="title_checklist">Мои Списки</string>
+    <string name="title_calendar">Календарь</string>
     <string name="title_settings">Настройки</string>
 </resources>
