@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">NotesVsShoppingList</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_notes">Мои Заметки</string>
+    <string name="title_checklist">Мои Списки</string>
+    <string name="title_calendar">Календарь</string>
+    <string name="title_settings">Настройки</string>
 </resources>
