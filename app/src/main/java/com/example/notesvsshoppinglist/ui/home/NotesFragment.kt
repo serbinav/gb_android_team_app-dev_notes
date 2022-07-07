@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.notesvsshoppinglist.databinding.FragmentNotesBinding
@@ -12,27 +11,23 @@ import com.example.notesvsshoppinglist.databinding.FragmentNotesBinding
 class NotesFragment : Fragment() {
 
     private var _binding: FragmentNotesBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private val adapter: NotesAdapter by lazy { NotesAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(NotesViewModel::class.java)
-
+        val homeViewModel = ViewModelProvider(this).get(NotesViewModel::class.java)
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        val textView: TextView = binding.textHome
+        val recycler = binding.recyclerNotes
+        recycler.adapter = adapter
         homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+            adapter.setData(it)
         }
-        return root
+        return binding.root
     }
 
     override fun onDestroyView() {
