@@ -14,7 +14,7 @@ android {
         versionCode = Config.VERSION_CODE
         versionName = Config.VERSION_NAME
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = Config.TEST_INSTRUMENTATION_RUNNER
     }
 
     buildTypes {
@@ -42,6 +42,8 @@ android {
 }
 
 dependencies {
+    implementation(project(Modules.DATABASE))
+
     implementation(Libraries.CORE_KTX)
     implementation(Libraries.APPCOMPAT)
     implementation(Libraries.MATERIAL)
