@@ -9,8 +9,8 @@ object Config {
     val JAVA_VERSION = JavaVersion.VERSION_1_8
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 
-    const val VERSION_CODE = 3
-    const val VERSION_NAME = "1.0.2"
+    const val VERSION_CODE = 4
+    const val VERSION_NAME = "1.0.3"
 }
 
 object Modules {
@@ -33,6 +33,7 @@ object Versions {
     const val JUNIT_ANDROID = "1.1.3"
     const val ESPRESSO = "3.4.0"
     const val ROOM = "2.4.2"
+    const val KOIN = "3.2.0"
 }
 
 object Libraries {
@@ -57,6 +58,9 @@ object Libraries {
     const val ROOM_RUNTIME = "androidx.room:room-runtime:${Versions.ROOM}"
     const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.ROOM}"
     const val ROOM_KTX = "androidx.room:room-ktx:${Versions.ROOM}"
+
+    // Koin
+    const val KOIN = "io.insert-koin:koin-android:${Versions.KOIN}"
 
     const val JUNIT = "junit:junit:${Versions.JUNIT}"
     const val JUNIT_ANDROID = "androidx.test.ext:junit:${Versions.JUNIT_ANDROID}"

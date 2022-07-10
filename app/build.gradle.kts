@@ -57,6 +57,9 @@ dependencies {
     implementation(Libraries.NAVIGATION_FRAGMENT_KTX)
     implementation(Libraries.NAVIGATION_UI_KTX)
 
+    // Koin
+    implementation(Libraries.KOIN)
+
     // Test libraries
     testImplementation(Libraries.JUNIT)
     androidTestImplementation(Libraries.JUNIT_ANDROID)
