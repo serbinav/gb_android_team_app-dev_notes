@@ -12,6 +12,9 @@ class NotesFragment : Fragment() {
 
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: NotesViewModel by lazy {
+        ViewModelProvider(this).get(NotesViewModel::class.java)
+    }
     private val adapter: NotesAdapter by lazy { NotesAdapter() }
 
     override fun onCreateView(
@@ -19,15 +22,17 @@ class NotesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel = ViewModelProvider(this).get(NotesViewModel::class.java)
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val recycler = binding.recyclerNotes
         recycler.adapter = adapter
-        homeViewModel.text.observe(viewLifecycleOwner) {
+        viewModel.text.observe(viewLifecycleOwner) {
             adapter.setData(it)
         }
-        return binding.root
     }
 
     override fun onDestroyView() {
