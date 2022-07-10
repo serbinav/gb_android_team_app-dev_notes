@@ -8,4 +8,5 @@
     <dimen name="corners_radius">5dp</dimen>
     <dimen name="text_view_completed_tasks_width">75dp</dimen>
     <dimen name="progress_bar_thickness">8dp</dimen>
+    <dimen name="about_text_size">16sp</dimen>
 </resources>
