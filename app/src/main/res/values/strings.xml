@@ -12,4 +12,8 @@
         Андрей - <a href="https://github.com/serbinav">github.com/serbinav</a> \n
         Ринат - <a href="https://github.com/Rinat-M">github.com/Rinat-M</a>
     </string>
+    <string name="title_add_notes">Добавить заметку</string>
+    <string name="notes_name">Название заметки</string>
+    <string name="notes_date">Дата создания</string>
+    <string name="notes_description">Заметка</string>
 </resources>
