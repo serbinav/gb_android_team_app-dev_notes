@@ -1,4 +1,4 @@
-package com.example.notesvsshoppinglist.ui.home
+package com.example.notesvsshoppinglist.ui.notes
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,6 +8,7 @@ import com.example.notesvsshoppinglist.databinding.ItemNotesBinding
 class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
     private var data: List<NotesData> = arrayListOf()
+    var onItemClick: ((NotesData) -> Unit)? = null
 
     fun setData(data: List<NotesData>) {
         this.data = data
@@ -37,12 +38,14 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
     inner class NotesViewHolder(private val binding: ItemNotesBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bind(data: NotesData) {
             with(binding) {
                 date.text = data.date
                 name.text = data.name
                 description.text = data.description
+            }
+            itemView.setOnClickListener {
+                onItemClick?.invoke(data)
             }
         }
     }

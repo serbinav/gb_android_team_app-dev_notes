@@ -1,11 +1,15 @@
-package com.example.notesvsshoppinglist.ui.home
+package com.example.notesvsshoppinglist.ui.notes
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import com.example.notesvsshoppinglist.R
 import com.example.notesvsshoppinglist.databinding.FragmentNotesBinding
 
 class NotesFragment : Fragment() {
@@ -32,6 +36,16 @@ class NotesFragment : Fragment() {
         recycler.adapter = adapter
         viewModel.text.observe(viewLifecycleOwner) {
             adapter.setData(it)
+        }
+
+        adapter.onItemClick = { data ->
+            val bundle = bundleOf(
+                "name" to data.name,
+                "date" to data.date,
+                "description" to data.description
+            )
+            view.findNavController()
+                .navigate(R.id.action_navigation_notes_to_navigation_add_notes, bundle)
         }
     }
 

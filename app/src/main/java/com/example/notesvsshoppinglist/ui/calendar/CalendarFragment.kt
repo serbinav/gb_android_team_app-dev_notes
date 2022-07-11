@@ -1,4 +1,4 @@
-package com.example.notesvsshoppinglist.ui.notifications
+package com.example.notesvsshoppinglist.ui.calendar
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.example.notesvsshoppinglist.ui.home
+package com.example.notesvsshoppinglist.ui.notes
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

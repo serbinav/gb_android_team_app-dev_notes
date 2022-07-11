@@ -1,4 +1,4 @@
-package com.example.notesvsshoppinglist.ui.notifications
+package com.example.notesvsshoppinglist.ui.calendar
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

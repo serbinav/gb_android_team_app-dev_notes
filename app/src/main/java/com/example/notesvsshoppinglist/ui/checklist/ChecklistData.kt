@@ -1,4 +1,4 @@
-package com.example.notesvsshoppinglist.ui.dashboard
+package com.example.notesvsshoppinglist.ui.checklist
 
 data class ChecklistData (
     var date: String = "10.01.2022",

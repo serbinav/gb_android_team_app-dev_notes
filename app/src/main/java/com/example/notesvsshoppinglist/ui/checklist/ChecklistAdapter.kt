@@ -1,4 +1,4 @@
-package com.example.notesvsshoppinglist.ui.dashboard
+package com.example.notesvsshoppinglist.ui.checklist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
