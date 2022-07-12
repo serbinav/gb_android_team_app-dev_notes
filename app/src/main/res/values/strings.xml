@@ -4,4 +4,16 @@
     <string name="title_checklist">Мои Списки</string>
     <string name="title_calendar">Календарь</string>
     <string name="title_settings">Настройки</string>
+    <string name="completed_tasks_format">%s/%s</string>
+    <string name="text_about">
+        Приложение <b>Notes vs Shopping list</b> - \n
+        удобные заметки и списки покупок \n
+        Разработчики: \n
+        Андрей - <a href="https://github.com/serbinav">github.com/serbinav</a> \n
+        Ринат - <a href="https://github.com/Rinat-M">github.com/Rinat-M</a>
+    </string>
+    <string name="title_add_notes">Добавить заметку</string>
+    <string name="notes_name">Название заметки</string>
+    <string name="notes_date">Дата создания</string>
+    <string name="notes_description">Заметка</string>
 </resources>

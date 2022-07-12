@@ -7,19 +7,23 @@
 
     <fragment
         android:id="@+id/navigation_notes"
-        android:name="com.example.notesvsshoppinglist.ui.home.NotesFragment"
+        android:name="com.example.notesvsshoppinglist.ui.notes.NotesFragment"
         android:label="@string/title_notes"
-        tools:layout="@layout/fragment_notes" />
+        tools:layout="@layout/fragment_notes" >
+        <action
+            android:id="@+id/action_navigation_notes_to_navigation_add_notes"
+            app:destination="@id/navigation_add_notes" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_checklist"
-        android:name="com.example.notesvsshoppinglist.ui.dashboard.ChecklistFragment"
+        android:name="com.example.notesvsshoppinglist.ui.checklist.ChecklistFragment"
         android:label="@string/title_checklist"
         tools:layout="@layout/fragment_checklist" />
 
     <fragment
         android:id="@+id/navigation_calendar"
-        android:name="com.example.notesvsshoppinglist.ui.notifications.CalendarFragment"
+        android:name="com.example.notesvsshoppinglist.ui.calendar.CalendarFragment"
         android:label="@string/title_calendar"
         tools:layout="@layout/fragment_calendar" />
 
@@ -28,4 +32,23 @@
         android:name="com.example.notesvsshoppinglist.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/navigation_add_notes"
+        android:name="com.example.notesvsshoppinglist.ui.notes.EditNotesFragment"
+        android:label="@string/title_add_notes"
+        tools:layout="@layout/fragment_edit_notes" >
+        <argument
+            android:name="name"
+            app:argType="string"
+            android:defaultValue="настр" />
+        <argument
+            android:name="date"
+            app:argType="string"
+            android:defaultValue="дата" />
+        <argument
+            android:name="description"
+            app:argType="string"
+            android:defaultValue="тут какой-то большой текст" />
+    </fragment>
 </navigation>

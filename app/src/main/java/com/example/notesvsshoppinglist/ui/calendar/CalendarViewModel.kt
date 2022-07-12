@@ -1,13 +1,13 @@
-package com.example.notesvsshoppinglist.ui.dashboard
+package com.example.notesvsshoppinglist.ui.calendar
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class ChecklistViewModel : ViewModel() {
+class CalendarViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+        value = "Under construction"
     }
     val text: LiveData<String> = _text
 }

@@ -1,10 +1,9 @@
-package com.example.notesvsshoppinglist.ui.dashboard
+package com.example.notesvsshoppinglist.ui.checklist
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.notesvsshoppinglist.databinding.FragmentChecklistBinding
@@ -12,27 +11,28 @@ import com.example.notesvsshoppinglist.databinding.FragmentChecklistBinding
 class ChecklistFragment : Fragment() {
 
     private var _binding: FragmentChecklistBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private val viewModel: ChecklistViewModel by lazy {
+        ViewModelProvider(this).get(ChecklistViewModel::class.java)
+    }
+    private val adapter: ChecklistAdapter by lazy { ChecklistAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(ChecklistViewModel::class.java)
-
         _binding = FragmentChecklistBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val recycler = binding.recyclerChecklist
+        recycler.adapter = adapter
+        viewModel.text.observe(viewLifecycleOwner) {
+            adapter.setData(it)
         }
-        return root
     }
 
     override fun onDestroyView() {
