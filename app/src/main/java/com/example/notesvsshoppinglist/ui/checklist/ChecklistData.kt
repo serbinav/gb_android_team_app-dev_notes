@@ -1,8 +1,18 @@
 package com.example.notesvsshoppinglist.ui.checklist
 
-data class ChecklistData (
-    var date: String = "10.01.2022",
-    var name: String = "Список 1",
-    var currentNumberCompletedTasks: Int = 10,
-    var totalTasksCount: Int = 20
-)
+import com.example.notesvsshoppinglist.ui.notes.NotesData
+
+data class ChecklistData(
+    var notes: NotesData = NotesData(),
+    var listTasks: List<ToDo> = arrayListOf()
+) {
+    fun countDoneTask(): Int {
+        var countCompletedTasks = 0
+        this.listTasks.forEach {
+            if (it.isDone) {
+                countCompletedTasks++
+            }
+        }
+        return countCompletedTasks
+    }
+}

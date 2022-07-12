@@ -3,27 +3,54 @@ package com.example.notesvsshoppinglist.ui.checklist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.notesvsshoppinglist.ui.notes.NotesData
 
 class ChecklistViewModel : ViewModel() {
     private var mockData = arrayListOf(
         ChecklistData(),
         ChecklistData(
-            "24.02.2022",
-            "Нужный список",
-            5,
-            15
+            NotesData(
+                "24.02.2022",
+                "Нужный список",
+                ""
+            ),
+            arrayListOf(
+                ToDo("отвертка", true),
+                ToDo("клещи"),
+                ToDo("рубанок"),
+            )
         ),
         ChecklistData(
-            "4.07.2022",
-            "Свободный",
-            99,
-            100
+            NotesData(
+                "4.07.2022",
+                "Свободный",
+                ""
+            ),
+            arrayListOf(
+                ToDo("утка", true),
+                ToDo("собака", true),
+                ToDo("тунец", true),
+                ToDo("калао", true),
+                ToDo("акула", true),
+                ToDo("гепард", true),
+                ToDo("волк", true),
+                ToDo("барсук", true),
+                ToDo("чайка", true),
+                ToDo("свинья"),
+            )
         ),
         ChecklistData(
-            "30.12.2022",
-            "Новогодний ",
-            3,
-            4
+            NotesData(
+                "30.12.2022",
+                "Новогодний ",
+                ""
+            ),
+            arrayListOf(
+                ToDo("калина", true),
+                ToDo("малина", true),
+                ToDo("вишня", true),
+                ToDo("крыжовник"),
+            )
         ),
     )
 
