@@ -40,9 +40,9 @@ class NotesFragment : Fragment() {
 
         adapter.onItemClick = { data ->
             val bundle = bundleOf(
-                "name" to data.name,
-                "date" to data.date,
-                "description" to data.description
+                NAME_BUNDLE to data.name,
+                DATE_BUNDLE to data.date,
+                DESCRIPTION_BUNDLE to data.description
             )
             view.findNavController()
                 .navigate(R.id.action_navigation_notes_to_navigation_add_notes, bundle)
@@ -52,5 +52,11 @@ class NotesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val NAME_BUNDLE = "name"
+        const val DATE_BUNDLE = "date"
+        const val DESCRIPTION_BUNDLE = "description"
     }
 }
