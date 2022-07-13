@@ -15,9 +15,9 @@ class ChecklistViewModel : ViewModel() {
                 ""
             ),
             arrayListOf(
-                ToDo("отвертка", true),
-                ToDo("клещи"),
-                ToDo("рубанок"),
+                ToDoData("отвертка", true),
+                ToDoData("клещи"),
+                ToDoData("рубанок"),
             )
         ),
         ChecklistData(
@@ -27,16 +27,16 @@ class ChecklistViewModel : ViewModel() {
                 ""
             ),
             arrayListOf(
-                ToDo("утка", true),
-                ToDo("собака", true),
-                ToDo("тунец", true),
-                ToDo("калао", true),
-                ToDo("акула", true),
-                ToDo("гепард", true),
-                ToDo("волк", true),
-                ToDo("барсук", true),
-                ToDo("чайка", true),
-                ToDo("свинья"),
+                ToDoData("утка", true),
+                ToDoData("собака", true),
+                ToDoData("тунец", true),
+                ToDoData("калао", true),
+                ToDoData("акула", true),
+                ToDoData("гепард", true),
+                ToDoData("волк", true),
+                ToDoData("барсук", true),
+                ToDoData("чайка", true),
+                ToDoData("свинья"),
             )
         ),
         ChecklistData(
@@ -46,10 +46,10 @@ class ChecklistViewModel : ViewModel() {
                 ""
             ),
             arrayListOf(
-                ToDo("калина", true),
-                ToDo("малина", true),
-                ToDo("вишня", true),
-                ToDo("крыжовник"),
+                ToDoData("калина", true),
+                ToDoData("малина", true),
+                ToDoData("вишня", true),
+                ToDoData("крыжовник"),
             )
         ),
     )

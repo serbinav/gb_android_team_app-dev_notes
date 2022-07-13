@@ -9,6 +9,7 @@ import com.example.notesvsshoppinglist.databinding.ItemChecklistBinding
 class ChecklistAdapter : RecyclerView.Adapter<ChecklistAdapter.ChecklistViewHolder>() {
 
     private var data: List<ChecklistData> = arrayListOf()
+    var onItemClick: ((ChecklistData) -> Unit)? = null
 
     fun setData(data: List<ChecklistData>) {
         this.data = data
@@ -55,6 +56,9 @@ class ChecklistAdapter : RecyclerView.Adapter<ChecklistAdapter.ChecklistViewHold
                         data.countDoneTask().toString(),
                         data.listTasks.size.toString()
                     )
+            }
+            itemView.setOnClickListener {
+                onItemClick?.invoke(data)
             }
         }
     }
