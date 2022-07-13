@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -39,11 +38,7 @@ class NotesFragment : Fragment() {
         }
 
         adapter.onItemClick = { data ->
-            val bundle = bundleOf(
-                NAME_BUNDLE to data.name,
-                DATE_BUNDLE to data.date,
-                DESCRIPTION_BUNDLE to data.description
-            )
+            val bundle = bundleOf(NOTES_BUNDLE to data)
             view.findNavController()
                 .navigate(R.id.action_navigation_notes_to_navigation_add_notes, bundle)
         }
@@ -55,8 +50,6 @@ class NotesFragment : Fragment() {
     }
 
     companion object {
-        const val NAME_BUNDLE = "name"
-        const val DATE_BUNDLE = "date"
-        const val DESCRIPTION_BUNDLE = "description"
+        const val NOTES_BUNDLE = "notes"
     }
 }

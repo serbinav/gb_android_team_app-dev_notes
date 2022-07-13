@@ -27,9 +27,12 @@ class EditNotesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.name.setText(arguments?.getString(NotesFragment.NAME_BUNDLE))
-        binding.date.setText(arguments?.getString(NotesFragment.DATE_BUNDLE))
-        binding.description.setText(arguments?.getString(NotesFragment.DESCRIPTION_BUNDLE))
+        val notes = arguments?.getParcelable<NotesData>(NotesFragment.NOTES_BUNDLE)
+        if (notes != null){
+            binding.name.setText(notes.name)
+            binding.date.setText(notes.date)
+            binding.description.setText(notes.description)
+        }
     }
 
     override fun onDestroyView() {
