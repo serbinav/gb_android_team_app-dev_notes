@@ -5,12 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesvsshoppinglist.databinding.ItemTodoBinding
 
-class TodoAdapter : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
+class TodoAdapter(private var data: ArrayList<ToDoData>) :
+    RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
-    private var data: List<ToDoData> = arrayListOf()
+    var onItemClick: ((ToDoData) -> Unit)? = null
 
-    fun setData(data: List<ToDoData>) {
-        this.data = data
+    fun updateReceipt(list: List<ToDoData>) {
+        data.clear()
+        data.addAll(list)
         notifyDataSetChanged()
     }
 
@@ -35,12 +37,29 @@ class TodoAdapter : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
         return data.size
     }
 
+    fun deleteItem(item: ToDoData) {
+        data.remove(item)
+        notifyDataSetChanged()
+    }
+
+    fun addItem(item: ToDoData) {
+        data.add(item)
+        notifyDataSetChanged()
+    }
+
     inner class TodoViewHolder(private val binding: ItemTodoBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: ToDoData) {
             with(binding) {
                 name.text = data.name
+                name.isChecked = data.isDone
+                name.isEnabled = !data.isDone
+            }
+            binding.name.setOnClickListener {
+                val dataChanged = data
+                dataChanged.isDone = !data.isDone
+                onItemClick?.invoke(dataChanged)
             }
         }
     }

@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ChecklistData(
     var notes: NotesData = NotesData(),
-    var listTasks: List<ToDoData> = arrayListOf()
+    var listTasks: ArrayList<ToDoData> = arrayListOf()
 ) : Parcelable {
 
     fun countDoneTask(): Int {
