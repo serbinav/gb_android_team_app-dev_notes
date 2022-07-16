@@ -1,6 +1,7 @@
 package com.example.notesvsshoppinglist.di
 
 import com.example.notesvsshoppinglist.repository.*
+import com.example.notesvsshoppinglist.ui.checklist.ChecklistViewModel
 import com.example.notesvsshoppinglist.ui.notes.NotesViewModel
 import com.rino.database.DatabaseModule
 import org.koin.dsl.module
@@ -15,8 +16,9 @@ val appModule = module {
 
     // Repository
     single<NoteRepository> { DummyNoteRepositoryImpl() }
-    single<ChecklistRepository> { ChecklistRepositoryImpl(checklistGetDao = get(), checklistSetDao = get()) }
+    single<ChecklistRepository> { DummyChecklistRepositoryImpl() }
 
     // View model
     single { NotesViewModel(noteRepository = get()) }
+    single { ChecklistViewModel(checklistRepository = get()) }
 }

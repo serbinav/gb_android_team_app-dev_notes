@@ -1,6 +1,6 @@
-package com.example.notesvsshoppinglist.ui.checklist
+package com.example.notesvsshoppinglist.core.model
 
-data class ChecklistData (
+data class ChecklistWithCounters (
     var date: String = "10.01.2022",
     var name: String = "Список 1",
     var currentNumberCompletedTasks: Int = 10,
