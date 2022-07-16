@@ -13,10 +13,10 @@ class ChecklistTask(
     val checklistId: Long,
     @ColumnInfo(name = "title")
     val title: String,
+    @ColumnInfo(name = "isMarked")
+    val isMarked: Boolean,
     @ColumnInfo(name = "amount")
     val amount: Long = 0L,
     @ColumnInfo(name = "createdAt")
-    val createdAt: Date = Date(),
-    @ColumnInfo(name = "isDeleted")
-    val isDeleted: Boolean = false
+    val createdAt: Date = Date()
 )
