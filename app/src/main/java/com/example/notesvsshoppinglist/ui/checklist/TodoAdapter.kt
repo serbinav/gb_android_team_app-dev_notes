@@ -62,16 +62,22 @@ class TodoAdapter(private var data: ArrayList<ToDoData>) :
                 name.isChecked = data.isDone
                 name.isEnabled = !data.isDone
             }
-            binding.name.setOnClickListener {
-                val dataChanged = data
-                dataChanged.isDone = !data.isDone
-                onItemClick?.invoke(dataChanged)
+            val dataChanged = data
+            itemView.setOnClickListener {
+                if (!dataChanged.isDone) {
+                    dataChanged.apply {
+                        this.isDone = true
+                        onItemClick?.invoke(this)
+                    }
+                }
             }
-
             itemView.setOnLongClickListener {
-                val dataChanged = data
-                dataChanged.isDone = !data.isDone
-                onItemLongClick?.invoke(dataChanged)
+                if (dataChanged.isDone) {
+                    dataChanged.apply {
+                        this.isDone = false
+                        onItemLongClick?.invoke(this)
+                    }
+                }
                 true
             }
         }
