@@ -9,6 +9,7 @@ class TodoAdapter(private var data: ArrayList<ToDoData>) :
     RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
     var onItemClick: ((ToDoData) -> Unit)? = null
+    var onItemLongClick: ((ToDoData) -> Unit)? = null
 
     fun updateReceipt(list: List<ToDoData>) {
         data.clear()
@@ -47,6 +48,11 @@ class TodoAdapter(private var data: ArrayList<ToDoData>) :
         notifyDataSetChanged()
     }
 
+    fun addFirstItem(item: ToDoData) {
+        data.add(0, item)
+        notifyDataSetChanged()
+    }
+
     inner class TodoViewHolder(private val binding: ItemTodoBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -60,6 +66,13 @@ class TodoAdapter(private var data: ArrayList<ToDoData>) :
                 val dataChanged = data
                 dataChanged.isDone = !data.isDone
                 onItemClick?.invoke(dataChanged)
+            }
+
+            itemView.setOnLongClickListener {
+                val dataChanged = data
+                dataChanged.isDone = !data.isDone
+                onItemLongClick?.invoke(dataChanged)
+                true
             }
         }
     }

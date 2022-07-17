@@ -41,6 +41,10 @@ class EditChecklistFragment : Fragment() {
                 adapter.deleteItem(data)
                 adapter.addItem(data)
             }
+            adapter.onItemLongClick = { data ->
+                adapter.deleteItem(data)
+                adapter.addFirstItem(data)
+            }
         }
     }
 
