@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.notesvsshoppinglist.databinding.FragmentChecklistBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChecklistFragment : Fragment() {
 
     private var _binding: FragmentChecklistBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: ChecklistViewModel by lazy {
-        ViewModelProvider(this).get(ChecklistViewModel::class.java)
-    }
+
+    private val checklistViewModel: ChecklistViewModel by viewModel()
+
     private val adapter: ChecklistAdapter by lazy { ChecklistAdapter() }
 
     override fun onCreateView(
@@ -30,7 +30,7 @@ class ChecklistFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recycler = binding.recyclerChecklist
         recycler.adapter = adapter
-        viewModel.text.observe(viewLifecycleOwner) {
+        checklistViewModel.checklists.observe(viewLifecycleOwner) {
             adapter.setData(it)
         }
     }

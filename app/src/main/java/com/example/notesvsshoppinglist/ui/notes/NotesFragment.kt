@@ -4,21 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.notesvsshoppinglist.R
 import com.example.notesvsshoppinglist.databinding.FragmentNotesBinding
+import com.example.notesvsshoppinglist.core.utils.toFormatString
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NotesFragment : Fragment() {
 
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: NotesViewModel by lazy {
-        ViewModelProvider(this).get(NotesViewModel::class.java)
-    }
+
+    private val notesViewModel: NotesViewModel by viewModel()
+
     private val adapter: NotesAdapter by lazy { NotesAdapter() }
 
     override fun onCreateView(
@@ -34,14 +34,14 @@ class NotesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recycler = binding.recyclerNotes
         recycler.adapter = adapter
-        viewModel.text.observe(viewLifecycleOwner) {
+        notesViewModel.notes.observe(viewLifecycleOwner) {
             adapter.setData(it)
         }
 
         adapter.onItemClick = { data ->
             val bundle = bundleOf(
-                "name" to data.name,
-                "date" to data.date,
+                "name" to data.title,
+                "date" to data.createdAt.toFormatString(),
                 "description" to data.description
             )
             view.findNavController()
