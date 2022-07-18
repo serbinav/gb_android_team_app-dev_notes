@@ -1,9 +1,9 @@
 package com.example.notesvsshoppinglist.repository
 
+import com.example.notesvsshoppinglist.core.utils.getDate
 import com.rino.database.entity.Note
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.util.*
 
 class DummyNoteRepositoryImpl : NoteRepository {
     private val fakeNotes = listOf(
@@ -11,19 +11,19 @@ class DummyNoteRepositoryImpl : NoteRepository {
             1,
             "Тестируем",
             "Здесь могла быть ваша реклама",
-            Date(122, 2, 20)
+            getDate(2022, 2, 20)
         ),
         Note(
             2,
             "Вторая заметка",
             "",
-            Date(122, 7, 5)
+            getDate(2022, 7, 5)
         ),
         Note(
             3,
             "Между первой и второй, перерывчик небольшой",
             "Третья заметка",
-            Date(122, 9, 30),
+            getDate(2022, 9, 30)
         ),
     )
 

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.notesvsshoppinglist.R
 import com.example.notesvsshoppinglist.databinding.FragmentNotesBinding
-import com.rino.translator.core.toString
+import com.example.notesvsshoppinglist.core.utils.toFormatString
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NotesFragment : Fragment() {
@@ -41,7 +41,7 @@ class NotesFragment : Fragment() {
         adapter.onItemClick = { data ->
             val bundle = bundleOf(
                 "name" to data.title,
-                "date" to data.createdAt.toString("dd.MM.yyyy"),
+                "date" to data.createdAt.toFormatString(),
                 "description" to data.description
             )
             view.findNavController()

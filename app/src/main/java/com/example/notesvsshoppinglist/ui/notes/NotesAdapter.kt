@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesvsshoppinglist.databinding.ItemNotesBinding
 import com.rino.database.entity.Note
-import com.rino.translator.core.toString
+import com.example.notesvsshoppinglist.core.utils.toFormatString
 
 class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
@@ -42,7 +42,7 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Note) {
             with(binding) {
-                date.text = data.createdAt.toString("dd.MM.yyyy")
+                date.text = data.createdAt.toFormatString()
                 name.text = data.title
                 description.text = data.description
             }

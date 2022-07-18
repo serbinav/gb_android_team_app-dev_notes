@@ -4,9 +4,8 @@ import com.example.notesvsshoppinglist.core.model.ChecklistWithCounters
 import com.rino.database.dao.ChecklistGetDao
 import com.rino.database.dao.ChecklistSetDao
 import com.rino.database.entity.Checklist
-import com.rino.translator.core.toString
+import com.example.notesvsshoppinglist.core.utils.toFormatString
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
 class ChecklistRepositoryImpl(
@@ -17,7 +16,7 @@ class ChecklistRepositoryImpl(
     override fun getAllChecklists(): List<ChecklistWithCounters> {
         return checklistGetDao.getAllChecklists().map { checklist ->
             ChecklistWithCounters(
-                date = checklist.createdAt.toString("dd.MM.yyyy"),
+                date = checklist.createdAt.toFormatString(),
                 name = checklist.title
             )
         }
@@ -27,7 +26,7 @@ class ChecklistRepositoryImpl(
         return checklistGetDao.getAllChecklistsFlow().map { list: List<Checklist> ->
             list.map {
                 ChecklistWithCounters(
-                    date = it.createdAt.toString("dd.MM.yyyy"),
+                    date = it.createdAt.toFormatString(),
                     name = it.title
                 )
             }
