@@ -6,18 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.notesvsshoppinglist.R
 import com.example.notesvsshoppinglist.databinding.FragmentNotesBinding
+import com.example.notesvsshoppinglist.core.utils.toFormatString
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NotesFragment : Fragment() {
 
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: NotesViewModel by lazy {
-        ViewModelProvider(this).get(NotesViewModel::class.java)
-    }
+
+    private val notesViewModel: NotesViewModel by viewModel()
+
     private val adapter: NotesAdapter by lazy { NotesAdapter() }
 
     override fun onCreateView(
@@ -33,7 +34,7 @@ class NotesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recycler = binding.recyclerNotes
         recycler.adapter = adapter
-        viewModel.text.observe(viewLifecycleOwner) {
+        notesViewModel.notes.observe(viewLifecycleOwner) {
             adapter.setData(it)
         }
 

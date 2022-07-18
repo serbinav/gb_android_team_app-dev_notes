@@ -3,9 +3,18 @@ package com.example.notesvsshoppinglist.ui.checklist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.notesvsshoppinglist.ui.notes.NotesData
+import androidx.lifecycle.viewModelScope
+import com.example.notesvsshoppinglist.core.model.ChecklistWithCounters
+import com.example.notesvsshoppinglist.repository.ChecklistRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 
-class ChecklistViewModel : ViewModel() {
+class ChecklistViewModel(
+    checklistRepository: ChecklistRepository
+) : ViewModel() {
+
     private var mockData = arrayListOf(
         ChecklistData(),
         ChecklistData(
@@ -54,10 +63,18 @@ class ChecklistViewModel : ViewModel() {
         ),
     )
 
-    private val _text = MutableLiveData<List<ChecklistData>>().apply {
-        value = sortData(mockData)
+    private val _checklists = MutableLiveData<List<ChecklistWithCounters>>(listOf())
+    val checklists: LiveData<List<ChecklistWithCounters>> = _checklists
+
+    init {
+        viewModelScope.launch {
+            checklistRepository.getAllChecklistsFlow()
+                .flowOn(Dispatchers.IO)
+                .collectLatest {
+                    _checklists.value = it
+                }
+        }
     }
-    val text: LiveData<List<ChecklistData>> = _text
 
     private fun sortData(data: List<ChecklistData>): List<ChecklistData> {
         val sortedData = arrayListOf<ChecklistData>()
@@ -69,4 +86,5 @@ class ChecklistViewModel : ViewModel() {
         }
         return sortedData
     }
+
 }
