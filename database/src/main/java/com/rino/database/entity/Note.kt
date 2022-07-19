@@ -1,12 +1,15 @@
 package com.rino.database.entity
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 import java.util.*
 
+@Parcelize
 @Entity
-class Note(
+data class Note(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     @ColumnInfo(name = "title")
@@ -15,4 +18,4 @@ class Note(
     val description: String,
     @ColumnInfo(name = "createdAt")
     val createdAt: Date = Date()
-)
+): Parcelable
