@@ -13,7 +13,7 @@
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/default_padding"
             android:paddingEnd="@dimen/default_padding"

@@ -39,10 +39,10 @@ class EditChecklistFragment : Fragment() {
 
             adapter = TodoAdapter(checklist.listTask.toCollection(arrayListOf()))
             recycler.adapter = adapter
-            adapter.onItemClick = { data ->
+            adapter.onItemUnmarked = { data ->
                 adapter.addItem(data)
             }
-            adapter.onItemLongClick = { data ->
+            adapter.onItemMarked = { data ->
                 adapter.addFirstItem(data)
             }
         }

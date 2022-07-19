@@ -1,5 +1,6 @@
 package com.example.notesvsshoppinglist.ui.checklist
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,8 +10,8 @@ import com.rino.database.entity.ChecklistTask
 class TodoAdapter(private var data: ArrayList<ChecklistTask>) :
     RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
-    var onItemClick: ((ChecklistTask) -> Unit)? = null
-    var onItemLongClick: ((ChecklistTask) -> Unit)? = null
+    var onItemUnmarked: ((ChecklistTask) -> Unit)? = null
+    var onItemMarked: ((ChecklistTask) -> Unit)? = null
 
     fun updateReceipt(list: List<ChecklistTask>) {
         data.clear()
@@ -61,29 +62,26 @@ class TodoAdapter(private var data: ArrayList<ChecklistTask>) :
             with(binding) {
                 name.text = data.title
                 name.isChecked = data.isMarked
-                name.isEnabled = !data.isMarked
+                if (data.isMarked) {
+                    name.setBackgroundColor(Color.parseColor("#E0E0E0"))
+                } else {
+                    name.setBackgroundColor(Color.parseColor("#FFFFFFFF"))
+                }
             }
             val dataChanged = data
-            itemView.setOnClickListener {
-                if (!dataChanged.isMarked) {
-                    dataChanged.apply {
-                        deleteItem(this)
-                        onItemClick?.invoke(
+            binding.name.setOnClickListener {
+                dataChanged.apply {
+                    deleteItem(this)
+                    if (dataChanged.isMarked) {
+                        onItemMarked?.invoke(
+                            ChecklistTask(this.id, this.checklistId, this.title, false)
+                        )
+                    } else {
+                        onItemUnmarked?.invoke(
                             ChecklistTask(this.id, this.checklistId, this.title, true)
                         )
                     }
                 }
-            }
-            itemView.setOnLongClickListener {
-                if (dataChanged.isMarked) {
-                    dataChanged.apply {
-                        deleteItem(this)
-                        onItemLongClick?.invoke(
-                            ChecklistTask(this.id, this.checklistId, this.title, false)
-                        )
-                    }
-                }
-                true
             }
         }
     }
