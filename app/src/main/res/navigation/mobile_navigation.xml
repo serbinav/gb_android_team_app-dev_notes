@@ -44,7 +44,7 @@
         tools:layout="@layout/fragment_edit_notes">
         <argument
             android:name="notes"
-            app:argType="com.example.notesvsshoppinglist.ui.notes.NotesData" />
+            app:argType="com.rino.database.entity.Note" />
     </fragment>
 
     <fragment
@@ -54,6 +54,6 @@
         tools:layout="@layout/fragment_edit_checklist">
         <argument
             android:name="checklist"
-            app:argType="com.example.notesvsshoppinglist.ui.checklist.ChecklistData" />
+            app:argType="com.example.notesvsshoppinglist.core.model.ChecklistWithTask" />
     </fragment>
 </navigation>
