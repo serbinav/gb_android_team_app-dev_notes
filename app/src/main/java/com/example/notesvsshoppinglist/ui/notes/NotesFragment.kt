@@ -39,7 +39,11 @@ class NotesFragment : Fragment() {
         }
 
         adapter.onItemClick = { data ->
-            val bundle = bundleOf(NOTES_BUNDLE to data)
+            val bundle = bundleOf(
+                NAME_BUNDLE to data.title,
+                DATE_BUNDLE to data.createdAt.toFormatString(),
+                DESCRIPTION_BUNDLE to data.description
+            )
             view.findNavController()
                 .navigate(R.id.action_navigation_notes_to_navigation_add_notes, bundle)
         }
@@ -51,6 +55,8 @@ class NotesFragment : Fragment() {
     }
 
     companion object {
-        const val NOTES_BUNDLE = "notes"
+        const val NAME_BUNDLE  = "name_bundle"
+        const val DATE_BUNDLE = "date_bundle"
+        const val DESCRIPTION_BUNDLE = "description_bundle"
     }
 }

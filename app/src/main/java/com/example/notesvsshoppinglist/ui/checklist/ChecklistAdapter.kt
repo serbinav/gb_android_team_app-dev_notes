@@ -4,16 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesvsshoppinglist.R
-import com.example.notesvsshoppinglist.core.model.ChecklistWithCounters
+import com.example.notesvsshoppinglist.core.model.ChecklistWithTask
+import com.example.notesvsshoppinglist.core.utils.Utils
+import com.example.notesvsshoppinglist.core.utils.toFormatString
 import com.example.notesvsshoppinglist.databinding.ItemChecklistBinding
 
 class ChecklistAdapter : RecyclerView.Adapter<ChecklistAdapter.ChecklistViewHolder>() {
 
-    private var data: List<ChecklistWithCounters> = arrayListOf()
-    private var data: List<ChecklistData> = arrayListOf()
-    var onItemClick: ((ChecklistData) -> Unit)? = null
+    private var data: List<ChecklistWithTask> = arrayListOf()
+    var onItemClick: ((ChecklistWithTask) -> Unit)? = null
 
-    fun setData(data: List<ChecklistWithCounters>) {
+    fun setData(data: List<ChecklistWithTask>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -42,21 +43,21 @@ class ChecklistAdapter : RecyclerView.Adapter<ChecklistAdapter.ChecklistViewHold
     inner class ChecklistViewHolder(private val binding: ItemChecklistBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: ChecklistWithCounters) {
+        fun bind(data: ChecklistWithTask) {
             with(binding) {
-                name.text = data.notes.name
-                date.text = data.notes.date
+                name.text = data.title
+                date.text = data.createdAt.toFormatString()
                 progressBar.progress =
-                    if (data.countDoneTask() != 0 && data.listTasks.isNotEmpty()) {
-                        (100 * data.countDoneTask()) / data.listTasks.size
+                    if (Utils.countDoneTask(data) != 0 && data.listTask.isNotEmpty()) {
+                        (100 * Utils.countDoneTask(data)) / data.listTask.size
                     } else {
                         0
                     }
                 progressBarCompletedTasks.text =
                     date.context.getString(
                         R.string.completed_tasks_format,
-                        data.countDoneTask().toString(),
-                        data.listTasks.size.toString()
+                        Utils.countDoneTask(data).toString(),
+                        data.listTask.size.toString()
                     )
             }
             itemView.setOnClickListener {

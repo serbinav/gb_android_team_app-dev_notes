@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.notesvsshoppinglist.core.model.ChecklistWithTask
+import com.example.notesvsshoppinglist.core.utils.toFormatString
 import com.example.notesvsshoppinglist.databinding.FragmentEditChecklistBinding
 
 class EditChecklistFragment : Fragment() {
@@ -28,21 +30,19 @@ class EditChecklistFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val checklist = arguments?.getParcelable<ChecklistData>(ChecklistFragment.CHECKLIST_BUNDLE)
+        val checklist = arguments?.getParcelable<ChecklistWithTask>(ChecklistFragment.CHECKLIST_BUNDLE)
         val recycler = binding.recyclerChecklist
         if (checklist != null){
-            binding.name.setText(checklist.notes.name)
-            binding.date.setText(checklist.notes.date)
-            binding.description.setText(checklist.notes.description)
+            binding.name.setText(checklist.title)
+            binding.date.setText(checklist.createdAt.toFormatString())
+            binding.description.setText(checklist.description)
 
-            adapter = TodoAdapter(checklist.listTasks)
+            adapter = TodoAdapter(checklist.listTask.toCollection(arrayListOf()))
             recycler.adapter = adapter
             adapter.onItemClick = { data ->
-                adapter.deleteItem(data)
                 adapter.addItem(data)
             }
             adapter.onItemLongClick = { data ->
-                adapter.deleteItem(data)
                 adapter.addFirstItem(data)
             }
         }
