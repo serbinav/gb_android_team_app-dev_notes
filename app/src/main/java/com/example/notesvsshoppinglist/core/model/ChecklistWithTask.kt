@@ -13,4 +13,17 @@ data class ChecklistWithTask(
     var isDone: Boolean,
     var createdAt: Date = Date(),
     var listTask: List<ChecklistTask> = arrayListOf()
-) : Parcelable
+) : Parcelable {
+
+    fun countDoneTask(): Int {
+        return if (!this.isDone) {
+            var countCompletedTasks = 0
+            this.listTask.forEach {
+                if (it.isMarked) {
+                    countCompletedTasks++
+                }
+            }
+            countCompletedTasks
+        } else this.listTask.size
+    }
+}

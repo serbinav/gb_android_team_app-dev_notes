@@ -1,7 +1,7 @@
 package com.example.notesvsshoppinglist.repository
 
 import com.example.notesvsshoppinglist.core.model.ChecklistWithTask
-import com.example.notesvsshoppinglist.core.utils.Utils
+import com.example.notesvsshoppinglist.core.utils.getDate
 import com.rino.database.entity.Checklist
 import com.rino.database.entity.ChecklistTask
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +14,7 @@ class DummyChecklistRepositoryImpl : ChecklistRepository {
             "Тестируем",
             "Здесь могла быть ваша реклама",
             false,
-            Utils.getDate(2022, 2, 20),
+            getDate(2022, 2, 20),
             arrayListOf(),
         ),
         ChecklistWithTask(
@@ -22,7 +22,7 @@ class DummyChecklistRepositoryImpl : ChecklistRepository {
             "Нужный список",
             "",
             false,
-            Utils.getDate(2022, 2, 24),
+            getDate(2022, 2, 24),
             arrayListOf(
                 ChecklistTask(1, 2, "отвертка", false),
                 ChecklistTask(2, 2, "клещи", true),
@@ -34,7 +34,7 @@ class DummyChecklistRepositoryImpl : ChecklistRepository {
             "Свободный",
             "",
             false,
-            Utils.getDate(2022, 7, 4),
+            getDate(2022, 7, 4),
             arrayListOf(
                 ChecklistTask(1, 3,"утка", true),
                 ChecklistTask(1, 3,"собака", true),
@@ -53,7 +53,7 @@ class DummyChecklistRepositoryImpl : ChecklistRepository {
             "Новогодний ",
             "",
             false,
-            Utils.getDate(2022, 12, 30),
+            getDate(2022, 12, 30),
             arrayListOf(
                 ChecklistTask(1, 4,"калина",false),
                 ChecklistTask(1, 4,"малина", true),

@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesvsshoppinglist.R
 import com.example.notesvsshoppinglist.core.model.ChecklistWithTask
-import com.example.notesvsshoppinglist.core.utils.Utils
 import com.example.notesvsshoppinglist.core.utils.toFormatString
 import com.example.notesvsshoppinglist.databinding.ItemChecklistBinding
 
@@ -48,15 +47,15 @@ class ChecklistAdapter : RecyclerView.Adapter<ChecklistAdapter.ChecklistViewHold
                 name.text = data.title
                 date.text = data.createdAt.toFormatString()
                 progressBar.progress =
-                    if (Utils.countDoneTask(data) != 0 && data.listTask.isNotEmpty()) {
-                        (100 * Utils.countDoneTask(data)) / data.listTask.size
+                    if (data.countDoneTask() != 0 && data.listTask.isNotEmpty()) {
+                        (100 * data.countDoneTask()) / data.listTask.size
                     } else {
                         0
                     }
                 progressBarCompletedTasks.text =
                     date.context.getString(
                         R.string.completed_tasks_format,
-                        Utils.countDoneTask(data).toString(),
+                        data.countDoneTask().toString(),
                         data.listTask.size.toString()
                     )
             }
