@@ -16,4 +16,6 @@
     <string name="notes_name">Название заметки</string>
     <string name="notes_date">Дата создания</string>
     <string name="notes_description">Заметка</string>
+    <string name="title_add_checklist">Добавить список покупок</string>
+    <string name="сhecklist_recycler">Список дел/покупок</string>
 </resources>

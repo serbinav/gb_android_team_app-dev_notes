@@ -1,6 +1,6 @@
 package com.example.notesvsshoppinglist.repository
 
-import com.example.notesvsshoppinglist.core.utils.getDate
+import com.example.notesvsshoppinglist.core.utils.Utils
 import com.rino.database.entity.Note
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -11,19 +11,19 @@ class DummyNoteRepositoryImpl : NoteRepository {
             1,
             "Тестируем",
             "Здесь могла быть ваша реклама",
-            getDate(2022, 2, 20)
+            Utils.getDate(2022, 2, 20)
         ),
         Note(
             2,
             "Вторая заметка",
             "",
-            getDate(2022, 7, 5)
+            Utils.getDate(2022, 7, 5)
         ),
         Note(
             3,
             "Между первой и второй, перерывчик небольшой",
             "Третья заметка",
-            getDate(2022, 9, 30)
+            Utils.getDate(2022, 9, 30)
         ),
     )
 

@@ -1,10 +1,9 @@
 package com.example.notesvsshoppinglist.repository
 
-import com.example.notesvsshoppinglist.core.model.ChecklistWithCounters
+import com.example.notesvsshoppinglist.core.model.ChecklistWithTask
 import com.rino.database.dao.ChecklistGetDao
 import com.rino.database.dao.ChecklistSetDao
 import com.rino.database.entity.Checklist
-import com.example.notesvsshoppinglist.core.utils.toFormatString
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -13,24 +12,31 @@ class ChecklistRepositoryImpl(
     private val checklistSetDao: ChecklistSetDao
 ) : ChecklistRepository {
 
-    override fun getAllChecklists(): List<ChecklistWithCounters> {
+    override fun getAllChecklists(): List<ChecklistWithTask> {
         return checklistGetDao.getAllChecklists().map { checklist ->
-            ChecklistWithCounters(
-                date = checklist.createdAt.toFormatString(),
-                name = checklist.title
+            ChecklistWithTask(
+                id = checklist.id,
+                title = checklist.title,
+                description = checklist.description,
+                isDone = checklist.isDone,
+                createdAt = checklist.createdAt,
+                listTask = arrayListOf()
             )
         }
     }
 
-    override fun getAllChecklistsFlow(): Flow<List<ChecklistWithCounters>> {
+    override fun getAllChecklistsFlow(): Flow<List<ChecklistWithTask>> {
         return checklistGetDao.getAllChecklistsFlow().map { list: List<Checklist> ->
             list.map {
-                ChecklistWithCounters(
-                    date = it.createdAt.toFormatString(),
-                    name = it.title
+                ChecklistWithTask(
+                    id = it.id,
+                    title = it.title,
+                    description = it.description,
+                    isDone = it.isDone,
+                    createdAt = it.createdAt,
+                    listTask = arrayListOf()
                 )
             }
-
         }
     }
 
