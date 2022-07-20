@@ -17,7 +17,7 @@ class EditChecklistFragment : Fragment() {
     private val viewModel: EditChecklistViewModel by lazy {
         ViewModelProvider(this).get(EditChecklistViewModel::class.java)
     }
-    private lateinit var adapter: TodoAdapter
+    private lateinit var adapter: TaskAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +37,7 @@ class EditChecklistFragment : Fragment() {
             binding.date.setText(checklist.createdAt.toFormatString())
             binding.description.setText(checklist.description)
 
-            adapter = TodoAdapter(checklist.listTask.toCollection(arrayListOf()))
+            adapter = TaskAdapter(checklist.listTask.toCollection(arrayListOf()))
             recycler.adapter = adapter
             adapter.onItemUnmarked = { data ->
                 adapter.addItem(data)

@@ -4,11 +4,11 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notesvsshoppinglist.databinding.ItemTodoBinding
+import com.example.notesvsshoppinglist.databinding.ItemTaskBinding
 import com.rino.database.entity.ChecklistTask
 
-class TodoAdapter(private var data: ArrayList<ChecklistTask>) :
-    RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
+class TaskAdapter(private var data: ArrayList<ChecklistTask>) :
+    RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     var onItemUnmarked: ((ChecklistTask) -> Unit)? = null
     var onItemMarked: ((ChecklistTask) -> Unit)? = null
@@ -22,17 +22,17 @@ class TodoAdapter(private var data: ArrayList<ChecklistTask>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): TodoAdapter.TodoViewHolder {
+    ): TaskAdapter.TaskViewHolder {
         val binding =
-            ItemTodoBinding.inflate(
+            ItemTaskBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             )
-        return TodoViewHolder(binding)
+        return TaskViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: TodoAdapter.TodoViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TaskAdapter.TaskViewHolder, position: Int) {
         holder.bind(data[position])
     }
 
@@ -55,7 +55,7 @@ class TodoAdapter(private var data: ArrayList<ChecklistTask>) :
         notifyItemInserted(0)
     }
 
-    inner class TodoViewHolder(private val binding: ItemTodoBinding) :
+    inner class TaskViewHolder(private val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: ChecklistTask) {
