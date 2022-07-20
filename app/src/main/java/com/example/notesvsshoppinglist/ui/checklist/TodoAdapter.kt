@@ -40,19 +40,19 @@ class TodoAdapter(private var data: ArrayList<ChecklistTask>) :
         return data.size
     }
 
-    fun deleteItem(item: ChecklistTask) {
-        data.remove(item)
-        notifyDataSetChanged()
+    fun deleteItem(position: Int) {
+        data.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     fun addItem(item: ChecklistTask) {
         data.add(item)
-        notifyDataSetChanged()
+        notifyItemInserted(data.size - 1)
     }
 
     fun addFirstItem(item: ChecklistTask) {
         data.add(0, item)
-        notifyDataSetChanged()
+        notifyItemInserted(0)
     }
 
     inner class TodoViewHolder(private val binding: ItemTodoBinding) :
@@ -71,7 +71,7 @@ class TodoAdapter(private var data: ArrayList<ChecklistTask>) :
             val dataChanged = data
             binding.name.setOnClickListener {
                 dataChanged.apply {
-                    deleteItem(this)
+                    deleteItem(adapterPosition)
                     if (dataChanged.isMarked) {
                         onItemMarked?.invoke(
                             ChecklistTask(this.id, this.checklistId, this.title, false)
