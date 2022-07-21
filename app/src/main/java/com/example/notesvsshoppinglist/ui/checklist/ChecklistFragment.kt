@@ -42,6 +42,11 @@ class ChecklistFragment : Fragment() {
             view.findNavController()
                 .navigate(R.id.action_navigation_checklist_to_navigation_add_checklist, bundle)
         }
+
+        binding.fabChecklist.setOnClickListener {
+            view.findNavController()
+                .navigate(R.id.action_navigation_checklist_to_navigation_add_checklist, null)
+        }
     }
 
     override fun onDestroyView() {

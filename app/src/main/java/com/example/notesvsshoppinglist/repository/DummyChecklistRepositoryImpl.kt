@@ -11,8 +11,8 @@ class DummyChecklistRepositoryImpl : ChecklistRepository {
     private val fakeChecklists = arrayListOf(
         ChecklistWithTask(
             1,
+            "Здесь могла быть ваша реклама, очень очень много вашей рекламы и можно даже еще немного больше",
             "Тестируем",
-            "Здесь могла быть ваша реклама",
             false,
             getDate(2022, 2, 20),
             arrayListOf(),
