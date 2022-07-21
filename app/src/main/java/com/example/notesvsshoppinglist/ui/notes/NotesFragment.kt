@@ -47,6 +47,11 @@ class NotesFragment : Fragment() {
             view.findNavController()
                 .navigate(R.id.action_navigation_notes_to_navigation_add_notes, bundle)
         }
+
+        binding.fabNotes.setOnClickListener {
+            view.findNavController()
+                .navigate(R.id.action_navigation_notes_to_navigation_add_notes, null)
+        }
     }
 
     override fun onDestroyView() {
