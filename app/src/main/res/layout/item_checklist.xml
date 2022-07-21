@@ -46,15 +46,22 @@
             android:paddingStart="@dimen/default_padding"
             android:paddingTop="@dimen/default_padding"
             android:paddingEnd="@dimen/default_padding"
-            app:layout_constraintEnd_toStartOf="@+id/progress_bar_completed_tasks"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/name"
             app:trackColor="@color/purple_200"
             app:trackThickness="@dimen/progress_bar_thickness" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.80" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/progress_bar_completed_tasks"
-            android:layout_width="@dimen/text_view_completed_tasks_width"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:maxLength="@integer/text_view_max_length"
             android:paddingStart="@dimen/default_padding"
@@ -62,6 +69,7 @@
             android:singleLine="true"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/name"
             tools:text="100/150" />
     </androidx.constraintlayout.widget.ConstraintLayout>
