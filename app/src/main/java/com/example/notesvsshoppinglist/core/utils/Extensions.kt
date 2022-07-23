@@ -10,3 +10,12 @@ fun Date.toFormatString(
     val formatter = SimpleDateFormat(format, locale)
     return formatter.format(this)
 }
+
+/**
+ *
+* Функция getCurrentDateTime() возвращает текущее время устройства.
+* Пригодится при создании заметок и списка покупок.
+* */
+fun getCurrentDateTime(): Date {
+    return Calendar.getInstance().time
+}
