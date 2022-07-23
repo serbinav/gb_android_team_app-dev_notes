@@ -13,8 +13,8 @@ class Checklist(
     val title: String,
     @ColumnInfo(name = "description")
     val description: String,
+    @ColumnInfo(name = "isDone")
+    val isDone: Boolean,
     @ColumnInfo(name = "createdAt")
-    val createdAt: Date = Date(),
-    @ColumnInfo(name = "isDeleted")
-    val isDeleted: Boolean = false
+    val createdAt: Date = Date()
 )

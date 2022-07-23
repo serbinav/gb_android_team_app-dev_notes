@@ -9,7 +9,7 @@
         android:id="@+id/navigation_notes"
         android:name="com.example.notesvsshoppinglist.ui.notes.NotesFragment"
         android:label="@string/title_notes"
-        tools:layout="@layout/fragment_notes" >
+        tools:layout="@layout/fragment_notes">
         <action
             android:id="@+id/action_navigation_notes_to_navigation_add_notes"
             app:destination="@id/navigation_add_notes" />
@@ -19,7 +19,11 @@
         android:id="@+id/navigation_checklist"
         android:name="com.example.notesvsshoppinglist.ui.checklist.ChecklistFragment"
         android:label="@string/title_checklist"
-        tools:layout="@layout/fragment_checklist" />
+        tools:layout="@layout/fragment_checklist">
+        <action
+            android:id="@+id/action_navigation_checklist_to_navigation_add_checklist"
+            app:destination="@id/navigation_add_checklist" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_calendar"
@@ -37,18 +41,19 @@
         android:id="@+id/navigation_add_notes"
         android:name="com.example.notesvsshoppinglist.ui.notes.EditNotesFragment"
         android:label="@string/title_add_notes"
-        tools:layout="@layout/fragment_edit_notes" >
+        tools:layout="@layout/fragment_edit_notes">
         <argument
-            android:name="name"
-            app:argType="string"
-            android:defaultValue="настр" />
+            android:name="notes"
+            app:argType="com.rino.database.entity.Note" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_checklist"
+        android:name="com.example.notesvsshoppinglist.ui.checklist.EditChecklistFragment"
+        android:label="@string/title_add_checklist"
+        tools:layout="@layout/fragment_edit_checklist">
         <argument
-            android:name="date"
-            app:argType="string"
-            android:defaultValue="дата" />
-        <argument
-            android:name="description"
-            app:argType="string"
-            android:defaultValue="тут какой-то большой текст" />
+            android:name="checklist"
+            app:argType="com.example.notesvsshoppinglist.core.model.ChecklistWithTask" />
     </fragment>
 </navigation>

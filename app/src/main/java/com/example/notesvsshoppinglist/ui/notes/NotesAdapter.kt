@@ -4,13 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesvsshoppinglist.databinding.ItemNotesBinding
+import com.rino.database.entity.Note
+import com.example.notesvsshoppinglist.core.utils.toFormatString
 
 class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
-    private var data: List<NotesData> = arrayListOf()
-    var onItemClick: ((NotesData) -> Unit)? = null
+    private var data: List<Note> = arrayListOf()
+    var onItemClick: ((Note) -> Unit)? = null
 
-    fun setData(data: List<NotesData>) {
+    fun setData(data: List<Note>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -38,10 +40,10 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
     inner class NotesViewHolder(private val binding: ItemNotesBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: NotesData) {
+        fun bind(data: Note) {
             with(binding) {
-                date.text = data.date
-                name.text = data.name
+                date.text = data.createdAt.toFormatString()
+                name.text = data.title
                 description.text = data.description
             }
             itemView.setOnClickListener {
