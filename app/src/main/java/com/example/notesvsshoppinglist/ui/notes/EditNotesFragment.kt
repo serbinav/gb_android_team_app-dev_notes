@@ -28,7 +28,7 @@ class EditNotesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.name.setText(arguments?.getString(NotesFragment.NAME_BUNDLE))
-        binding.date.setText(arguments?.getString(NotesFragment.DATE_BUNDLE))
+        binding.date.text = arguments?.getString(NotesFragment.DATE_BUNDLE)
         binding.description.setText(arguments?.getString(NotesFragment.DESCRIPTION_BUNDLE))
     }
 
