@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.notesvsshoppinglist.R
-import com.example.notesvsshoppinglist.databinding.FragmentNotesBinding
 import com.example.notesvsshoppinglist.core.utils.toFormatString
+import com.example.notesvsshoppinglist.databinding.FragmentNotesBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NotesFragment : Fragment() {
@@ -19,7 +19,18 @@ class NotesFragment : Fragment() {
 
     private val notesViewModel: NotesViewModel by viewModel()
 
-    private val adapter: NotesAdapter by lazy { NotesAdapter() }
+    private val notesAdapter: NotesAdapter by lazy {
+        NotesAdapter { data ->
+            val bundle = bundleOf(
+                NAME_BUNDLE to data.title,
+                DATE_BUNDLE to data.createdAt.toFormatString(),
+                DESCRIPTION_BUNDLE to data.description
+            )
+
+            findNavController()
+                .navigate(R.id.action_navigation_notes_to_navigation_add_notes, bundle)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,20 +43,11 @@ class NotesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recycler = binding.recyclerNotes
-        recycler.adapter = adapter
-        notesViewModel.notes.observe(viewLifecycleOwner) {
-            adapter.setData(it)
-        }
 
-        adapter.onItemClick = { data ->
-            val bundle = bundleOf(
-                NAME_BUNDLE to data.title,
-                DATE_BUNDLE to data.createdAt.toFormatString(),
-                DESCRIPTION_BUNDLE to data.description
-            )
-            view.findNavController()
-                .navigate(R.id.action_navigation_notes_to_navigation_add_notes, bundle)
+        binding.recyclerNotes.apply { this.adapter = notesAdapter }
+
+        notesViewModel.notes.observe(viewLifecycleOwner) { notes ->
+            notesAdapter.submitList(notes)
         }
     }
 
@@ -55,7 +57,7 @@ class NotesFragment : Fragment() {
     }
 
     companion object {
-        const val NAME_BUNDLE  = "name_bundle"
+        const val NAME_BUNDLE = "name_bundle"
         const val DATE_BUNDLE = "date_bundle"
         const val DESCRIPTION_BUNDLE = "description_bundle"
     }
