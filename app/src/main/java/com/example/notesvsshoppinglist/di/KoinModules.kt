@@ -3,6 +3,8 @@ package com.example.notesvsshoppinglist.di
 import com.example.notesvsshoppinglist.repository.*
 import com.example.notesvsshoppinglist.ui.calendar.CalendarViewModel
 import com.example.notesvsshoppinglist.ui.checklist.ChecklistViewModel
+import com.example.notesvsshoppinglist.ui.checklist.EditChecklistViewModel
+import com.example.notesvsshoppinglist.ui.notes.EditNotesViewModel
 import com.example.notesvsshoppinglist.ui.notes.NotesViewModel
 import com.rino.database.DatabaseModule
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -24,4 +26,6 @@ val appModule = module {
     viewModel { NotesViewModel(noteRepository = get()) }
     viewModel { ChecklistViewModel(checklistRepository = get()) }
     viewModel { CalendarViewModel() }
+    viewModel { EditChecklistViewModel() }
+    viewModel { EditNotesViewModel() }
 }
