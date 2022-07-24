@@ -2,41 +2,31 @@ package com.example.notesvsshoppinglist.ui.checklist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesvsshoppinglist.R
 import com.example.notesvsshoppinglist.core.model.ChecklistWithTask
 import com.example.notesvsshoppinglist.core.utils.toFormatString
 import com.example.notesvsshoppinglist.databinding.ItemChecklistBinding
 
-class ChecklistAdapter : RecyclerView.Adapter<ChecklistAdapter.ChecklistViewHolder>() {
-
-    private var data: List<ChecklistWithTask> = arrayListOf()
-    var onItemClick: ((ChecklistWithTask) -> Unit)? = null
-
-    fun setData(data: List<ChecklistWithTask>) {
-        this.data = data
-        notifyDataSetChanged()
-    }
+class ChecklistAdapter(
+    private val onItemClick: (ChecklistWithTask) -> Unit
+) : ListAdapter<ChecklistWithTask, ChecklistAdapter.ChecklistViewHolder>(
+    ChecklistItemCallback()
+) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ChecklistAdapter.ChecklistViewHolder {
         val binding =
-            ItemChecklistBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+            ItemChecklistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ChecklistViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ChecklistAdapter.ChecklistViewHolder, position: Int) {
-        holder.bind(data[position])
-    }
-
-    override fun getItemCount(): Int {
-        return data.size
+        holder.bind(currentList[position])
     }
 
     inner class ChecklistViewHolder(private val binding: ItemChecklistBinding) :
@@ -58,10 +48,23 @@ class ChecklistAdapter : RecyclerView.Adapter<ChecklistAdapter.ChecklistViewHold
                         data.countDoneTask().toString(),
                         data.listTask.size.toString()
                     )
+
+                root.setOnClickListener { onItemClick.invoke(data) }
             }
-            itemView.setOnClickListener {
-                onItemClick?.invoke(data)
-            }
+
         }
+    }
+}
+
+class ChecklistItemCallback : DiffUtil.ItemCallback<ChecklistWithTask>() {
+    override fun areItemsTheSame(oldItem: ChecklistWithTask, newItem: ChecklistWithTask): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(
+        oldItem: ChecklistWithTask,
+        newItem: ChecklistWithTask
+    ): Boolean {
+        return oldItem == newItem
     }
 }
