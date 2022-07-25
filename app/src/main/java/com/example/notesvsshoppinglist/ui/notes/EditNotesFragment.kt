@@ -1,29 +1,15 @@
 package com.example.notesvsshoppinglist.ui.notes
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.notesvsshoppinglist.databinding.FragmentEditNotesBinding
+import com.example.notesvsshoppinglist.ui.base.BaseFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class EditNotesFragment : Fragment() {
+class EditNotesFragment :
+    BaseFragment<FragmentEditNotesBinding>(FragmentEditNotesBinding::inflate) {
 
-    private var _binding: FragmentEditNotesBinding? = null
-    private val binding get() = _binding!!
-    private val viewModel: EditNotesViewModel by lazy {
-        ViewModelProvider(this).get(EditNotesViewModel::class.java)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentEditNotesBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private val editNotesViewModel: EditNotesViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,8 +18,4 @@ class EditNotesFragment : Fragment() {
         binding.description.setText(arguments?.getString(NotesFragment.DESCRIPTION_BUNDLE))
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

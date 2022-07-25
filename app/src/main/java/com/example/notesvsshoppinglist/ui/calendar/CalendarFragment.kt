@@ -1,38 +1,21 @@
 package com.example.notesvsshoppinglist.ui.calendar
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.notesvsshoppinglist.databinding.FragmentCalendarBinding
+import com.example.notesvsshoppinglist.ui.base.BaseFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CalendarFragment : Fragment() {
+class CalendarFragment : BaseFragment<FragmentCalendarBinding>(FragmentCalendarBinding::inflate) {
 
-    private var _binding: FragmentCalendarBinding? = null
-    private val binding get() = _binding!!
+    private val calendarViewModel: CalendarViewModel by viewModel()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(CalendarViewModel::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        _binding = FragmentCalendarBinding.inflate(inflater, container, false)
-
-        val textView: TextView = binding.textCalendar
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        calendarViewModel.text.observe(viewLifecycleOwner) {
+            binding.textCalendar.text = it
         }
-        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
