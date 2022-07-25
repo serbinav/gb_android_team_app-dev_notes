@@ -34,7 +34,7 @@ class ChecklistFragment :
         }
 
         binding.fabChecklist.setOnClickListener {
-            view.findNavController()
+            findNavController()
                 .navigate(R.id.action_navigation_checklist_to_navigation_add_checklist, null)
         }
     }

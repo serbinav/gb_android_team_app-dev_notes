@@ -21,14 +21,8 @@ class NotesFragment : BaseFragment<FragmentNotesBinding>(FragmentNotesBinding::i
                 DATE_BUNDLE to data.createdAt.toFormatString(),
                 DESCRIPTION_BUNDLE to data.description
             )
-
             findNavController()
                 .navigate(R.id.action_navigation_notes_to_navigation_add_notes, bundle)
-        }
-
-        binding.fabNotes.setOnClickListener {
-            view.findNavController()
-                .navigate(R.id.action_navigation_notes_to_navigation_add_notes, null)
         }
     }
 
@@ -39,6 +33,11 @@ class NotesFragment : BaseFragment<FragmentNotesBinding>(FragmentNotesBinding::i
 
         notesViewModel.notes.observe(viewLifecycleOwner) { notes ->
             notesAdapter.submitList(notes)
+        }
+
+        binding.fabNotes.setOnClickListener {
+            findNavController()
+                .navigate(R.id.action_navigation_notes_to_navigation_add_notes, null)
         }
     }
 
