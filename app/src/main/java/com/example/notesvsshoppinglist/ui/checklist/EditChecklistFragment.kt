@@ -34,7 +34,7 @@ class EditChecklistFragment : Fragment() {
         val recycler = binding.recyclerChecklist
         if (checklist != null){
             binding.name.setText(checklist.title)
-            binding.date.setText(checklist.createdAt.toFormatString())
+            binding.date.text = checklist.createdAt.toFormatString()
             binding.description.setText(checklist.description)
 
             adapter = TaskAdapter(checklist.listTask.toCollection(arrayListOf()))
