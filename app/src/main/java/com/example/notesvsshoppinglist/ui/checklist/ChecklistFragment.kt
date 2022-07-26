@@ -1,52 +1,37 @@
 package com.example.notesvsshoppinglist.ui.checklist
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.notesvsshoppinglist.R
 import com.example.notesvsshoppinglist.databinding.FragmentChecklistBinding
+import com.example.notesvsshoppinglist.ui.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ChecklistFragment : Fragment() {
-
-    private var _binding: FragmentChecklistBinding? = null
-    private val binding get() = _binding!!
+class ChecklistFragment :
+    BaseFragment<FragmentChecklistBinding>(FragmentChecklistBinding::inflate) {
 
     private val checklistViewModel: ChecklistViewModel by viewModel()
 
-    private val adapter: ChecklistAdapter by lazy { ChecklistAdapter() }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentChecklistBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val recycler = binding.recyclerChecklist
-        recycler.adapter = adapter
-        checklistViewModel.checklists.observe(viewLifecycleOwner) {
-            adapter.setData(it)
-        }
-
-        adapter.onItemClick = { data ->
+    private val checklistAdapter: ChecklistAdapter by lazy {
+        ChecklistAdapter { data ->
             val bundle = bundleOf(CHECKLIST_BUNDLE to data)
-            view.findNavController()
+            findNavController()
                 .navigate(R.id.action_navigation_checklist_to_navigation_add_checklist, bundle)
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.recyclerChecklist.apply {
+            this.adapter = checklistAdapter
+        }
+
+        checklistViewModel.checklists.observe(viewLifecycleOwner) {
+            checklistAdapter.submitList(it)
+        }
     }
 
     companion object {
