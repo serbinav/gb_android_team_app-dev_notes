@@ -2,4 +2,5 @@
 <resources>
     <integer name="text_view_max_length">7</integer>
     <integer name="number_lines">3</integer>
+    <integer name="text_max_lines">4</integer>
 </resources>

@@ -32,6 +32,11 @@ class ChecklistFragment :
         checklistViewModel.checklists.observe(viewLifecycleOwner) {
             checklistAdapter.submitList(it)
         }
+
+        binding.fabChecklist.setOnClickListener {
+            findNavController()
+                .navigate(R.id.action_navigation_checklist_to_navigation_add_checklist, null)
+        }
     }
 
     companion object {

@@ -12,10 +12,9 @@ fun Date.toFormatString(
 }
 
 /**
- *
-* Функция getCurrentDateTime() возвращает текущее время устройства.
-* Пригодится при создании заметок и списка покупок.
-* */
+ * Функция getCurrentDateTime() возвращает текущее время устройства.
+ * Пригодится при создании заметок и списка покупок.
+ **/
 fun getCurrentDateTime(): Date {
     return Calendar.getInstance().time
 }
