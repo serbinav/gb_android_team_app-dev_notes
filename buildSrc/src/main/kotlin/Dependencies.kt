@@ -9,8 +9,8 @@ object Config {
     val JAVA_VERSION = JavaVersion.VERSION_1_8
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 
-    const val VERSION_CODE = 11
-    const val VERSION_NAME = "1.0.10"
+    const val VERSION_CODE = 12
+    const val VERSION_NAME = "1.0.11"
 }
 
 object Modules {

@@ -9,4 +9,5 @@
     <dimen name="about_text_size">16sp</dimen>
     <dimen name="elevation_size">6dp</dimen>
     <dimen name="zero_size">0dp</dimen>
+    <dimen name="match_constraint">0dp</dimen>
 </resources>
