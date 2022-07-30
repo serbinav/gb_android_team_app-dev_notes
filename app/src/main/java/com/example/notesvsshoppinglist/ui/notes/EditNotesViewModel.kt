@@ -21,7 +21,10 @@ class EditNotesViewModel(
     init {
         viewModelScope.launch {
             _currentNote.value = withContext(Dispatchers.IO) {
-                noteRepository.getNoteById(noteId) ?: Note(title = "Новая заметка", description = "")
+                noteRepository.getNoteById(noteId) ?: Note(
+                    title = "Новая заметка",
+                    description = ""
+                )
             }
         }
     }
@@ -34,6 +37,15 @@ class EditNotesViewModel(
             }
 
             _currentNote.value = updatedNote.copy(id = noteId)
+        }
+    }
+
+    fun deleteNote() {
+        currentNote.value?.let {
+            viewModelScope.launch(Dispatchers.IO) {
+                noteRepository.deleteNoteById(it.id)
+            }
+            _currentNote.value = null
         }
     }
 
