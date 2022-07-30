@@ -14,4 +14,5 @@ interface ChecklistSetDao {
 
     @Query("DELETE FROM checklist WHERE id=:checklistId")
     fun deleteChecklistId(checklistId: Long)
+
 }

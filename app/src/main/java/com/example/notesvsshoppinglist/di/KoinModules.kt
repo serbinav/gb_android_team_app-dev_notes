@@ -19,7 +19,7 @@ val appModule = module {
     single { DatabaseModule.getChecklistSetDao(database = get()) }
 
     // Repository
-    single<NoteRepository> { DummyNoteRepositoryImpl() }
+    single<NoteRepository> { NoteRepositoryImpl(noteGetDao = get(), noteSetDao = get()) }
     single<ChecklistRepository> { DummyChecklistRepositoryImpl() }
 
     // View model
@@ -27,5 +27,5 @@ val appModule = module {
     viewModel { ChecklistViewModel(checklistRepository = get()) }
     viewModel { CalendarViewModel() }
     viewModel { EditChecklistViewModel() }
-    viewModel { EditNotesViewModel() }
+    viewModel { parameters -> EditNotesViewModel(noteRepository = get(), noteId = parameters.get()) }
 }

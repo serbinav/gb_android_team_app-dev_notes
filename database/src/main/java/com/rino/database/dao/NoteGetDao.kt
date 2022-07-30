@@ -13,4 +13,8 @@ interface NoteGetDao {
 
     @Query("SELECT * FROM Note ORDER BY createdAt DESC")
     fun getAllNotesFlow(): Flow<List<Note>>
+
+    @Query("SELECT * FROM Note WHERE id = :noteId")
+    fun getNoteById(noteId: Long): Note?
+
 }

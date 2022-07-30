@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class NotesViewModel(
-    noteRepository: NoteRepository
+    private val noteRepository: NoteRepository
 ) : ViewModel() {
 
     private val _notes = MutableLiveData<List<Note>>(listOf())

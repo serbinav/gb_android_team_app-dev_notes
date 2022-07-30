@@ -31,7 +31,11 @@ class DummyNoteRepositoryImpl : NoteRepository {
 
     override fun getAllNotesFlow(): Flow<List<Note>> = flow { emit(fakeNotes) }
 
-    override fun updateNote(note: Note) {
+    override fun getNoteById(noteId: Long): Note? {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateNote(note: Note): Long {
         TODO("Not yet implemented")
     }
 
