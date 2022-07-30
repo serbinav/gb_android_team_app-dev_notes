@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.notesvsshoppinglist.provider.StringProvider
 import com.example.notesvsshoppinglist.repository.NoteRepository
 import com.rino.database.entity.Note
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +14,8 @@ import kotlinx.coroutines.withContext
 
 class EditNotesViewModel(
     private val noteRepository: NoteRepository,
-    private val noteId: Long
+    private val noteId: Long,
+    private val stringProvider: StringProvider
 ) : ViewModel() {
     private val _currentNote = MutableLiveData<Note>()
     val currentNote: LiveData<Note> = _currentNote
@@ -22,7 +24,7 @@ class EditNotesViewModel(
         viewModelScope.launch {
             _currentNote.value = withContext(Dispatchers.IO) {
                 noteRepository.getNoteById(noteId) ?: Note(
-                    title = "Новая заметка",
+                    title = stringProvider.newNote,
                     description = ""
                 )
             }
