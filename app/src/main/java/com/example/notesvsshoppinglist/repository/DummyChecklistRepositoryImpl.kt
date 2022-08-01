@@ -37,15 +37,15 @@ class DummyChecklistRepositoryImpl : ChecklistRepository {
             getDate(2022, 7, 4),
             arrayListOf(
                 ChecklistTask(1, 3,"утка", true),
-                ChecklistTask(1, 3,"собака", true),
-                ChecklistTask(1, 3,"тунец", true),
-                ChecklistTask(1, 3,"калао", true),
-                ChecklistTask(1, 3,"акула", true),
-                ChecklistTask(1, 3,"гепард", true),
-                ChecklistTask(1, 3,"волк",false),
-                ChecklistTask(1, 3,"барсук", true),
-                ChecklistTask(1, 3,"чайка", true),
-                ChecklistTask(1, 3,"свинья", true),
+                ChecklistTask(2, 3,"собака", true),
+                ChecklistTask(3, 3,"тунец", true),
+                ChecklistTask(4, 3,"калао", true),
+                ChecklistTask(5, 3,"акула", true),
+                ChecklistTask(6, 3,"гепард", true),
+                ChecklistTask(7, 3,"волк",false),
+                ChecklistTask(8, 3,"барсук", true),
+                ChecklistTask(9, 3,"чайка", true),
+                ChecklistTask(10, 3,"свинья", true),
             )
         ),
         ChecklistWithTask(
@@ -56,9 +56,9 @@ class DummyChecklistRepositoryImpl : ChecklistRepository {
             getDate(2022, 12, 30),
             arrayListOf(
                 ChecklistTask(1, 4,"калина",false),
-                ChecklistTask(1, 4,"малина", true),
-                ChecklistTask(1, 4,"вишня", true),
-                ChecklistTask(1, 4,"крыжовник", true),
+                ChecklistTask(2, 4,"малина", true),
+                ChecklistTask(3, 4,"вишня", true),
+                ChecklistTask(4, 4,"крыжовник", true),
             )
         ),
     )
