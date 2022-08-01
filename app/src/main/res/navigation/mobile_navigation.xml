@@ -42,9 +42,6 @@
         android:name="com.example.notesvsshoppinglist.ui.notes.EditNotesFragment"
         android:label="@string/title_add_notes"
         tools:layout="@layout/fragment_edit_notes">
-        <argument
-            android:name="notes"
-            app:argType="com.rino.database.entity.Note" />
     </fragment>
 
     <fragment
