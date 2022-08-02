@@ -1,17 +1,18 @@
 package com.example.notesvsshoppinglist.ui.checklist
 
 import android.os.Bundle
-import android.view.ContextMenu
+import android.view.*
 import android.view.ContextMenu.ContextMenuInfo
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.notesvsshoppinglist.R
 import com.example.notesvsshoppinglist.core.model.ChecklistWithTask
 import com.example.notesvsshoppinglist.core.utils.toFormatString
@@ -31,19 +32,50 @@ class EditChecklistFragment :
     private lateinit var checklistTask: ChecklistTask
     private var position: Int = 0
 
+    private val menuProvider by lazy {
+        object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.edit_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.action_delete -> {
+                        editChecklistViewModel.deleteChecklist()
+                        findNavController().popBackStack()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        (requireActivity() as MenuHost)
+            .addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val checklist =
+        val checklistWithTask =
             arguments?.getParcelable<ChecklistWithTask>(ChecklistFragment.CHECKLIST_BUNDLE)
         val recycler = binding.recyclerChecklist
         registerForContextMenu(recycler)
 
-        if (checklist != null) {
-            binding.name.setText(checklist.title)
-            binding.date.text = checklist.createdAt.toFormatString()
-            binding.description.setText(checklist.description)
+        if (checklistWithTask != null) {
+            binding.name.setText(checklistWithTask.checklist.title)
+            binding.date.text = checklistWithTask.checklist.createdAt.toFormatString()
+            binding.description.setText(checklistWithTask.checklist.description)
 
-            adapter = TaskAdapter(checklist.listTask.toCollection(arrayListOf()))
+            adapter = TaskAdapter(checklistWithTask.listTask.toCollection(arrayListOf()))
             recycler.adapter = adapter
             adapter.onItemUnmarked = { data ->
                 adapter.addItem(data)
@@ -62,6 +94,30 @@ class EditChecklistFragment :
                 taskAdapter = adapter,
                 lambda = { _, task: ChecklistTask -> adapter.addFirstItem(task) })
         }
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        requireActivity().menuInflater.inflate(R.menu.context_menu, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.act_edit -> showAddOrEditDialog(
+                taskName = checklistTask.title,
+                taskPosition = position,
+                taskMark = checklistTask.isMarked,
+                taskAdapter = adapter,
+                dialogIcon = R.drawable.ic_baseline_edit_note_24,
+                lambda = { index, task -> adapter.editItem(index, task) })
+            R.id.act_delete -> adapter.deleteItem(position)
+            //добавить запрос подтверждение удаления
+        }
+        return true
     }
 
     private fun showAddOrEditDialog(
@@ -95,29 +151,5 @@ class EditChecklistFragment :
             .setNegativeButton(R.string.alert_negative_btn) { _, _ -> }
         builder.show()
         editText.requestFocus()
-    }
-
-    override fun onCreateContextMenu(
-        menu: ContextMenu,
-        v: View,
-        menuInfo: ContextMenuInfo?
-    ) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        requireActivity().menuInflater.inflate(R.menu.context_menu, menu)
-    }
-
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.act_edit -> showAddOrEditDialog(
-                taskName = checklistTask.title,
-                taskPosition = position,
-                taskMark = checklistTask.isMarked,
-                taskAdapter = adapter,
-                dialogIcon = R.drawable.ic_baseline_edit_note_24,
-                lambda = { index, task -> adapter.editItem(index, task) })
-            R.id.act_delete -> adapter.deleteItem(position)
-            //добавить запрос подтверждение удаления
-        }
-        return true
     }
 }
