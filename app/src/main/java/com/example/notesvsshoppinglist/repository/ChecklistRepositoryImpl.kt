@@ -15,11 +15,13 @@ class ChecklistRepositoryImpl(
     override fun getAllChecklists(): List<ChecklistWithTask> {
         return checklistGetDao.getAllChecklists().map { checklist ->
             ChecklistWithTask(
-                id = checklist.id,
-                title = checklist.title,
-                description = checklist.description,
-                isDone = checklist.isDone,
-                createdAt = checklist.createdAt,
+                Checklist(
+                    checklist.id,
+                    checklist.title,
+                    checklist.description,
+                    checklist.isDone,
+                    checklist.createdAt
+                ),
                 listTask = arrayListOf()
             )
         }
@@ -29,16 +31,21 @@ class ChecklistRepositoryImpl(
         return checklistGetDao.getAllChecklistsFlow().map { list: List<Checklist> ->
             list.map {
                 ChecklistWithTask(
-                    id = it.id,
-                    title = it.title,
-                    description = it.description,
-                    isDone = it.isDone,
-                    createdAt = it.createdAt,
+                    Checklist(
+                        it.id,
+                        it.title,
+                        it.description,
+                        it.isDone,
+                        it.createdAt
+                    ),
                     listTask = arrayListOf()
                 )
             }
         }
     }
+
+    override fun getChecklistById(checklistId: Long): Checklist? =
+        checklistGetDao.getChecklistById(checklistId)
 
     override fun updateChecklist(checklist: Checklist) = checklistSetDao.insertChecklist(checklist)
 

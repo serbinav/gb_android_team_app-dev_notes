@@ -21,7 +21,12 @@ val appModule = module {
 
     // Repository
     single<NoteRepository> { NoteRepositoryImpl(noteGetDao = get(), noteSetDao = get()) }
-    single<ChecklistRepository> { DummyChecklistRepositoryImpl() }
+    single<ChecklistRepository> {
+        ChecklistRepositoryImpl(
+            checklistGetDao = get(),
+            checklistSetDao = get()
+        )
+    }
 
     // Provider
     single { StringProvider(context = get()) }
@@ -30,7 +35,13 @@ val appModule = module {
     viewModel { NotesViewModel(noteRepository = get()) }
     viewModel { ChecklistViewModel(checklistRepository = get()) }
     viewModel { CalendarViewModel() }
-    viewModel { EditChecklistViewModel() }
+    viewModel { parameters ->
+        EditChecklistViewModel(
+            checklistRepository = get(),
+            checklistId = parameters.get(),
+            stringProvider = get()
+        )
+    }
     viewModel { parameters ->
         EditNotesViewModel(
             noteRepository = get(),
