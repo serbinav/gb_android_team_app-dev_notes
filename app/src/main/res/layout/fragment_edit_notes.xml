@@ -25,8 +25,7 @@
             android:id="@+id/date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/default_padding"
-            android:paddingRight="@dimen/default_padding"
+            android:paddingHorizontal="@dimen/default_padding"
             android:paddingBottom="@dimen/default_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/date_header"
@@ -46,6 +45,8 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/notes_name"
+            android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/name_header" />
@@ -64,9 +65,13 @@
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="@integer/number_lines"
+            android:gravity="start"
+            android:hint="@string/note_description"
+            android:inputType="textMultiLine"
+            android:minLines="@integer/number_lines"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description_header" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

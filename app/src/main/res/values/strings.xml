@@ -18,4 +18,7 @@
     <string name="notes_description">Заметка</string>
     <string name="title_add_checklist">Добавить список покупок</string>
     <string name="сhecklist_recycler">Список дел/покупок</string>
+    <string name="note_description">Описание заметки</string>
+    <string name="delete">Удалить</string>
+    <string name="new_note">Новая заметка</string>
 </resources>
