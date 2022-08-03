@@ -33,17 +33,17 @@ class EditChecklistFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val checklist =
+        val checklistWithTask =
             arguments?.getParcelable<ChecklistWithTask>(ChecklistFragment.CHECKLIST_BUNDLE)
         val recycler = binding.recyclerChecklist
         registerForContextMenu(recycler)
 
-        if (checklist != null) {
-            binding.name.setText(checklist.title)
-            binding.date.text = checklist.createdAt.toFormatString()
-            binding.description.setText(checklist.description)
+        if (checklistWithTask != null) {
+            binding.name.setText(checklistWithTask.checklist.title)
+            binding.date.text = checklistWithTask.checklist.createdAt.toFormatString()
+            binding.description.setText(checklistWithTask.checklist.description)
 
-            adapter = TaskAdapter(checklist.listTask.toCollection(arrayListOf()))
+            adapter = TaskAdapter(checklistWithTask.listTask.toCollection(arrayListOf()))
             recycler.adapter = adapter
             adapter.onItemUnmarked = { data ->
                 adapter.addItem(data)

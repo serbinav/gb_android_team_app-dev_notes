@@ -30,7 +30,13 @@ val appModule = module {
     viewModel { NotesViewModel(noteRepository = get()) }
     viewModel { ChecklistViewModel(checklistRepository = get()) }
     viewModel { CalendarViewModel() }
-    viewModel { EditChecklistViewModel() }
+    viewModel { parameters ->
+        EditChecklistViewModel(
+            checklistRepository = get(),
+            checklistId = parameters.get(),
+            stringProvider = get()
+        )
+    }
     viewModel { parameters ->
         EditNotesViewModel(
             noteRepository = get(),
