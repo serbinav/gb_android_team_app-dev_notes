@@ -3,18 +3,16 @@ package com.example.notesvsshoppinglist.ui.checklist
 import android.os.Bundle
 import android.view.ContextMenu
 import android.view.ContextMenu.ContextMenuInfo
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.appcompat.widget.AppCompatEditText
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.lifecycle.ViewModelProvider
 import com.example.notesvsshoppinglist.R
 import com.example.notesvsshoppinglist.core.model.ChecklistWithTask
 import com.example.notesvsshoppinglist.core.utils.toFormatString
+import com.example.notesvsshoppinglist.databinding.DialogEditBinding
 import com.example.notesvsshoppinglist.databinding.FragmentEditChecklistBinding
 import com.example.notesvsshoppinglist.ui.base.BaseFragment
 import com.rino.database.entity.ChecklistTask
@@ -73,28 +71,32 @@ class EditChecklistFragment :
         dialogIcon: Int = R.drawable.ic_baseline_playlist_add_24,
         lambda: (Int, ChecklistTask) -> Unit
     ) {
-        val view: View =
-            LayoutInflater.from(requireContext()).inflate(R.layout.dialog_edit, null, false)
-        val editText = view.findViewById<AppCompatEditText>(R.id.edit_elem)
-        editText.setText(taskName)
-        val imageView = view.findViewById<AppCompatImageView>(R.id.img_header)
-        imageView.setImageDrawable(AppCompatResources.getDrawable(requireContext(), dialogIcon))
-        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-            .setView(view)
-            .setPositiveButton(R.string.alert_positive_btn) { _, _ ->
-                if (editText.text != null && editText.text.toString().isNotEmpty()) {
-                    val task = ChecklistTask(
-                        id = taskAdapter.itemCount.toLong(),
-                        checklistId = taskAdapter.getChecklistId(),
-                        title = editText.text.toString(),
-                        isMarked = taskMark
-                    )
-                    lambda(taskPosition, task)
+        val dialogBinding = DialogEditBinding.inflate(layoutInflater, null, false)
+        with(dialogBinding) {
+            editElem.setText(taskName)
+            imgHeader.setImageDrawable(
+                AppCompatResources.getDrawable(
+                    requireContext(),
+                    dialogIcon
+                )
+            )
+            val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+                .setView(root)
+                .setPositiveButton(R.string.alert_positive_btn) { _, _ ->
+                    if (editElem.text.isNullOrEmpty().not()) {
+                        val task = ChecklistTask(
+                            id = taskAdapter.itemCount.toLong(),
+                            checklistId = taskAdapter.getChecklistId(),
+                            title = editElem.text.toString(),
+                            isMarked = taskMark
+                        )
+                        lambda(taskPosition, task)
+                    }
                 }
-            }
-            .setNegativeButton(R.string.alert_negative_btn) { _, _ -> }
-        builder.show()
-        editText.requestFocus()
+                .setNegativeButton(R.string.alert_negative_btn) { _, _ -> }
+            builder.show()
+            editElem.requestFocus()
+        }
     }
 
     override fun onCreateContextMenu(
