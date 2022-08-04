@@ -44,9 +44,8 @@ class ChecklistRepositoryImpl(
         }
     }
 
-    override fun getChecklistById(checklistId: Long): Checklist? {
-        TODO("Not yet implemented")
-    }
+    override fun getChecklistById(checklistId: Long): Checklist? =
+        checklistGetDao.getChecklistById(checklistId)
 
     override fun updateChecklist(checklist: Checklist) = checklistSetDao.insertChecklist(checklist)
 

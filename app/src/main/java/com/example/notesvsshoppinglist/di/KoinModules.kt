@@ -21,7 +21,12 @@ val appModule = module {
 
     // Repository
     single<NoteRepository> { NoteRepositoryImpl(noteGetDao = get(), noteSetDao = get()) }
-    single<ChecklistRepository> { DummyChecklistRepositoryImpl() }
+    single<ChecklistRepository> {
+        ChecklistRepositoryImpl(
+            checklistGetDao = get(),
+            checklistSetDao = get()
+        )
+    }
 
     // Provider
     single { StringProvider(context = get()) }

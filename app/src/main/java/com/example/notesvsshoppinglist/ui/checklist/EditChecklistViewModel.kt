@@ -33,4 +33,13 @@ class EditChecklistViewModel(
             }
         }
     }
+
+    fun deleteChecklist() {
+        currentChecklist.value?.let {
+            viewModelScope.launch(Dispatchers.IO) {
+                checklistRepository.deleteChecklistById(it.checklist.id)
+            }
+            _currentChecklist.value = null
+        }
+    }
 }

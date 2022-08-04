@@ -14,4 +14,7 @@ interface ChecklistGetDao {
     @Query("SELECT * FROM Checklist ORDER BY createdAt DESC")
     fun getAllChecklistsFlow(): Flow<List<Checklist>>
 
+    @Query("SELECT * FROM Checklist WHERE id = :checklistId")
+    fun getChecklistById(checklistId: Long): Checklist?
+
 }
