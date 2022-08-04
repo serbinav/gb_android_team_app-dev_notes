@@ -61,10 +61,6 @@ class TaskAdapter(private var data: ArrayList<ChecklistTask>) :
         notifyItemChanged(index)
     }
 
-    fun getChecklistId(): Long {
-        return data.first().checklistId
-    }
-
     inner class TaskViewHolder(private val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

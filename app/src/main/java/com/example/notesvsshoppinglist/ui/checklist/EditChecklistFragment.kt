@@ -25,40 +25,45 @@ class EditChecklistFragment :
     private val viewModel: EditChecklistViewModel by lazy {
         ViewModelProvider(this).get(EditChecklistViewModel::class.java)
     }
+
+    //TODO временный костыль, это уйдет когда перейдем на нормальную работу с viewModel
+    private lateinit var checklistWithTask: ChecklistWithTask
     private lateinit var adapter: TaskAdapter
     private lateinit var checklistTask: ChecklistTask
     private var position: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val checklistWithTask =
-            arguments?.getParcelable<ChecklistWithTask>(ChecklistFragment.CHECKLIST_BUNDLE)
         val recycler = binding.recyclerChecklist
         registerForContextMenu(recycler)
 
-        if (checklistWithTask != null) {
-            binding.name.setText(checklistWithTask.checklist.title)
-            binding.date.text = checklistWithTask.checklist.createdAt.toFormatString()
-            binding.description.setText(checklistWithTask.checklist.description)
+        with(binding) {
+            val arg = arguments?.getParcelable<ChecklistWithTask>(ChecklistFragment.CHECKLIST_BUNDLE)
+            if (arg != null) {
+                checklistWithTask = arg
+                name.setText(checklistWithTask.checklist.title)
+                date.text = checklistWithTask.checklist.createdAt.toFormatString()
+                description.setText(checklistWithTask.checklist.description)
 
-            adapter = TaskAdapter(checklistWithTask.listTask.toCollection(arrayListOf()))
-            recycler.adapter = adapter
-            adapter.onItemUnmarked = { data ->
-                adapter.addItem(data)
+                adapter = TaskAdapter(checklistWithTask.listTask.toCollection(arrayListOf()))
+                recycler.adapter = adapter
+                adapter.onItemUnmarked = { data ->
+                    adapter.addItem(data)
+                }
+                adapter.onItemMarked = { data ->
+                    adapter.addFirstItem(data)
+                }
+                adapter.onItemLongClick = { data, pos ->
+                    checklistTask = data
+                    position = pos
+                    recycler.showContextMenu()
+                }
             }
-            adapter.onItemMarked = { data ->
-                adapter.addFirstItem(data)
+            buttonAddTask.setOnClickListener {
+                showAddOrEditDialog(
+                    taskAdapter = adapter,
+                    lambda = { _, task: ChecklistTask -> adapter.addFirstItem(task) })
             }
-            adapter.onItemLongClick = { data, pos ->
-                checklistTask = data
-                position = pos
-                recycler.showContextMenu()
-            }
-        }
-        binding.buttonAddTask.setOnClickListener {
-            showAddOrEditDialog(
-                taskAdapter = adapter,
-                lambda = { _, task: ChecklistTask -> adapter.addFirstItem(task) })
         }
     }
 
@@ -86,7 +91,7 @@ class EditChecklistFragment :
                     if (editElem.text.isNullOrEmpty().not()) {
                         val task = ChecklistTask(
                             id = taskAdapter.itemCount.toLong(),
-                            checklistId = taskAdapter.getChecklistId(),
+                            checklistId = checklistWithTask.checklist.id,
                             title = editElem.text.toString(),
                             isMarked = taskMark
                         )
