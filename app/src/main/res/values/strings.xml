@@ -21,4 +21,9 @@
     <string name="note_description">Описание заметки</string>
     <string name="delete">Удалить</string>
     <string name="new_note">Новая заметка</string>
+    <string name="alert_edit_text">Введите название задачи</string>
+    <string name="alert_positive_btn">Сохранить</string>
+    <string name="alert_negative_btn">Отмена</string>
+    <string name="action_edit">Изменить</string>
+    <string name="action_del">Удалить</string>
 </resources>

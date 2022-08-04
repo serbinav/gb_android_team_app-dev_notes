@@ -34,8 +34,8 @@ class ChecklistAdapter(
 
         fun bind(data: ChecklistWithTask) {
             with(binding) {
-                name.text = data.title
-                date.text = data.createdAt.toFormatString()
+                name.text = data.checklist.title
+                date.text = data.checklist.createdAt.toFormatString()
                 progressBar.progress =
                     if (data.countDoneTask() != 0 && data.listTask.isNotEmpty()) {
                         (100 * data.countDoneTask()) / data.listTask.size
@@ -58,7 +58,7 @@ class ChecklistAdapter(
 
 class ChecklistItemCallback : DiffUtil.ItemCallback<ChecklistWithTask>() {
     override fun areItemsTheSame(oldItem: ChecklistWithTask, newItem: ChecklistWithTask): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.checklist.id == newItem.checklist.id
     }
 
     override fun areContentsTheSame(

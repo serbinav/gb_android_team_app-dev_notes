@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:background="@color/purple_200"
             android:text="@string/notes_name"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/date" />
@@ -57,6 +58,7 @@
             android:layout_height="wrap_content"
             android:background="@color/purple_200"
             android:text="@string/notes_description"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/name" />
