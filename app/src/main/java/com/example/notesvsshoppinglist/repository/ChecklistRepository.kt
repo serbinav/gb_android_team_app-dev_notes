@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface ChecklistRepository {
     fun getAllChecklists(): List<ChecklistWithTask>
     fun getAllChecklistsFlow(): Flow<List<ChecklistWithTask>>
+    fun getChecklistById(checklistId: Long): Checklist?
     fun updateChecklist(checklist: Checklist)
     fun deleteChecklistById(checklistId: Long)
 }

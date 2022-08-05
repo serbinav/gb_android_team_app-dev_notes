@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:background="@color/purple_200"
             android:text="@string/notes_name"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/date" />
@@ -56,6 +57,7 @@
             android:layout_height="wrap_content"
             android:background="@color/purple_200"
             android:text="@string/notes_description"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/name" />
@@ -71,22 +73,38 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/recycler_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@color/purple_200"
+            android:gravity="center|start"
             android:text="@string/сhecklist_recycler"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/button_add_task"
+            app:layout_constraintEnd_toStartOf="@+id/button_add_task"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_add_task" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/button_add_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/teal_200"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:src="@drawable/ic_baseline_playlist_add_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/recycler_header"
             app:layout_constraintTop_toBottomOf="@id/description" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_checklist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/default_padding"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycler_header"
+            app:layout_constraintTop_toBottomOf="@id/button_add_task"
             tools:listitem="@layout/item_task" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

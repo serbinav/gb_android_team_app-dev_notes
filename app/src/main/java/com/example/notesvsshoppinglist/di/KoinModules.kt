@@ -1,5 +1,6 @@
 package com.example.notesvsshoppinglist.di
 
+import com.example.notesvsshoppinglist.provider.StringProvider
 import com.example.notesvsshoppinglist.repository.*
 import com.example.notesvsshoppinglist.ui.calendar.CalendarViewModel
 import com.example.notesvsshoppinglist.ui.checklist.ChecklistViewModel
@@ -19,13 +20,28 @@ val appModule = module {
     single { DatabaseModule.getChecklistSetDao(database = get()) }
 
     // Repository
-    single<NoteRepository> { DummyNoteRepositoryImpl() }
+    single<NoteRepository> { NoteRepositoryImpl(noteGetDao = get(), noteSetDao = get()) }
     single<ChecklistRepository> { DummyChecklistRepositoryImpl() }
+
+    // Provider
+    single { StringProvider(context = get()) }
 
     // View model
     viewModel { NotesViewModel(noteRepository = get()) }
     viewModel { ChecklistViewModel(checklistRepository = get()) }
     viewModel { CalendarViewModel() }
-    viewModel { EditChecklistViewModel() }
-    viewModel { EditNotesViewModel() }
+    viewModel { parameters ->
+        EditChecklistViewModel(
+            checklistRepository = get(),
+            checklistId = parameters.get(),
+            stringProvider = get()
+        )
+    }
+    viewModel { parameters ->
+        EditNotesViewModel(
+            noteRepository = get(),
+            noteId = parameters.get(),
+            stringProvider = get()
+        )
+    }
 }

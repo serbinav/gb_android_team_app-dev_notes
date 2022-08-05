@@ -5,7 +5,6 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.example.notesvsshoppinglist.R
-import com.example.notesvsshoppinglist.core.utils.toFormatString
 import com.example.notesvsshoppinglist.databinding.FragmentNotesBinding
 import com.example.notesvsshoppinglist.ui.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -16,11 +15,7 @@ class NotesFragment : BaseFragment<FragmentNotesBinding>(FragmentNotesBinding::i
 
     private val notesAdapter: NotesAdapter by lazy {
         NotesAdapter { data ->
-            val bundle = bundleOf(
-                NAME_BUNDLE to data.title,
-                DATE_BUNDLE to data.createdAt.toFormatString(),
-                DESCRIPTION_BUNDLE to data.description
-            )
+            val bundle = bundleOf(EditNotesFragment.NOTE_ID to data.id)
             findNavController()
                 .navigate(R.id.action_navigation_notes_to_navigation_add_notes, bundle)
         }
@@ -39,11 +34,5 @@ class NotesFragment : BaseFragment<FragmentNotesBinding>(FragmentNotesBinding::i
             findNavController()
                 .navigate(R.id.action_navigation_notes_to_navigation_add_notes, null)
         }
-    }
-
-    companion object {
-        const val NAME_BUNDLE = "name_bundle"
-        const val DATE_BUNDLE = "date_bundle"
-        const val DESCRIPTION_BUNDLE = "description_bundle"
     }
 }

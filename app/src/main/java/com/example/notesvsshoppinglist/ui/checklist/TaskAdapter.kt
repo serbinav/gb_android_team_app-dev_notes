@@ -12,6 +12,7 @@ class TaskAdapter(private var data: ArrayList<ChecklistTask>) :
 
     var onItemUnmarked: ((ChecklistTask) -> Unit)? = null
     var onItemMarked: ((ChecklistTask) -> Unit)? = null
+    var onItemLongClick: ((ChecklistTask, Int) -> Unit)? = null
 
     fun updateReceipt(list: List<ChecklistTask>) {
         data.clear()
@@ -45,14 +46,19 @@ class TaskAdapter(private var data: ArrayList<ChecklistTask>) :
         notifyItemRemoved(position)
     }
 
-    fun addItem(item: ChecklistTask) {
-        data.add(item)
+    fun addItem(task: ChecklistTask) {
+        data.add(task)
         notifyItemInserted(data.size - 1)
     }
 
-    fun addFirstItem(item: ChecklistTask) {
-        data.add(0, item)
+    fun addFirstItem(task: ChecklistTask) {
+        data.add(0, task)
         notifyItemInserted(0)
+    }
+
+    fun editItem(index: Int, task: ChecklistTask) {
+        data[index] = task
+        notifyItemChanged(index)
     }
 
     inner class TaskViewHolder(private val binding: ItemTaskBinding) :
@@ -67,6 +73,10 @@ class TaskAdapter(private var data: ArrayList<ChecklistTask>) :
                 } else {
                     name.setBackgroundColor(Color.parseColor("#FFFFFFFF"))
                 }
+            }
+            binding.name.setOnLongClickListener{
+                onItemLongClick?.invoke(data, adapterPosition)
+                true
             }
             val dataChanged = data
             binding.name.setOnClickListener {
