@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_notes,
                 R.id.navigation_checklist,
                 R.id.navigation_calendar,
-                R.id.navigation_settings
+                R.id.navigation_about_app
             )
         )
 
