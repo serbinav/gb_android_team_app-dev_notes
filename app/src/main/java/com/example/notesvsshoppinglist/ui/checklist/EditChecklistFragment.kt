@@ -27,6 +27,7 @@ class EditChecklistFragment :
     }
 
     private lateinit var adapter: TaskAdapter
+    //TODO проверить нет ли тут бага
     private var checklistId: Long = 0L
     private lateinit var checklistTask: ChecklistTask
     private var positionTask: Int = 0
@@ -74,13 +75,21 @@ class EditChecklistFragment :
                     date.text = checklistWithTask.checklist.createdAt.toFormatString()
                     description.setText(checklistWithTask.checklist.description)
 
-                    adapter = TaskAdapter(checklistWithTask.tasks.toCollection(arrayListOf()))
+                    adapter = TaskAdapter(editChecklistViewModel)
                     recycler.adapter = adapter
                     adapter.onItemUnmarked = { data ->
+                        editChecklistViewModel.updateNameDescription(
+                            name.text.toString(),
+                            description.text.toString()
+                        )
                         adapter.addItem(data)
                     }
                     adapter.onItemMarked = { data ->
-                        adapter.addFirstItem(data)
+                        editChecklistViewModel.updateNameDescription(
+                            name.text.toString(),
+                            description.text.toString()
+                        )
+                        adapter.addItem(data)
                     }
                     adapter.onItemLongClick = { data, pos ->
                         checklistTask = data
@@ -97,8 +106,11 @@ class EditChecklistFragment :
                                     title = title,
                                     isMarked = false
                                 )
-                                adapter.addFirstItem(task)
-                                editChecklistViewModel.updateChecklistTask(task)
+                                editChecklistViewModel.updateNameDescription(
+                                    name.text.toString(),
+                                    description.text.toString()
+                                )
+                                adapter.addItem(task)
                             }
                         )
                     }
@@ -129,13 +141,19 @@ class EditChecklistFragment :
                         title = title,
                         isMarked = checklistTask.isMarked
                     )
+                    editChecklistViewModel.updateNameDescription(
+                        binding.name.text.toString(),
+                        binding.description.text.toString()
+                    )
                     adapter.editItem(index, task)
-                    editChecklistViewModel.updateChecklistTask(task)
                 }
             )
             R.id.act_delete -> {
-                adapter.deleteItem(positionTask)
-                editChecklistViewModel.deleteChecklistTask(checklistTask.id)
+                editChecklistViewModel.updateNameDescription(
+                    binding.name.text.toString(),
+                    binding.description.text.toString()
+                )
+                adapter.deleteItem(positionTask, checklistTask.id)
             }
             //добавить запрос подтверждение удаления
         }
@@ -177,8 +195,7 @@ class EditChecklistFragment :
         with(binding) {
             editChecklistViewModel.updateChecklist(
                 name.text.toString(),
-                description.text.toString(),
-                adapter.getItems()
+                description.text.toString()
             )
         }
     }

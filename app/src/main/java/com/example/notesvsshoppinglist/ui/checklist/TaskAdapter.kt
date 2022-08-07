@@ -7,18 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notesvsshoppinglist.databinding.ItemTaskBinding
 import com.rino.database.entity.ChecklistTask
 
-class TaskAdapter(private var data: ArrayList<ChecklistTask>) :
+class TaskAdapter(private val editChecklistViewModel: EditChecklistViewModel) :
     RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     var onItemUnmarked: ((ChecklistTask) -> Unit)? = null
     var onItemMarked: ((ChecklistTask) -> Unit)? = null
     var onItemLongClick: ((ChecklistTask, Int) -> Unit)? = null
-
-    fun updateReceipt(list: List<ChecklistTask>) {
-        data.clear()
-        data.addAll(list)
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -34,35 +28,32 @@ class TaskAdapter(private var data: ArrayList<ChecklistTask>) :
     }
 
     override fun onBindViewHolder(holder: TaskAdapter.TaskViewHolder, position: Int) {
-        holder.bind(data[position])
+        editChecklistViewModel.currentChecklist.value?.let {
+            holder.bind(it.tasks[position])
+        }
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        editChecklistViewModel.currentChecklist.value?.let {
+            return it.tasks.size
+        }
+        return 0
     }
 
-    fun deleteItem(position: Int) {
-        data.removeAt(position)
+    fun deleteItem(position: Int, checklistTaskId: Long) {
+        editChecklistViewModel.deleteChecklistTask(checklistTaskId)
         notifyItemRemoved(position)
     }
 
     fun addItem(task: ChecklistTask) {
-        data.add(task)
-        notifyItemInserted(data.size - 1)
-    }
-
-    fun addFirstItem(task: ChecklistTask) {
-        data.add(0, task)
-        notifyItemInserted(0)
+        editChecklistViewModel.updateChecklistTask(task)
+        notifyItemInserted(itemCount - 1)
     }
 
     fun editItem(index: Int, task: ChecklistTask) {
-        data[index] = task
+        editChecklistViewModel.updateChecklistTask(task)
         notifyItemChanged(index)
     }
-
-    //TODO передавать в TaskAdapter ViewModel
-    fun getItems(): ArrayList<ChecklistTask> = data
 
     inner class TaskViewHolder(private val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -77,15 +68,13 @@ class TaskAdapter(private var data: ArrayList<ChecklistTask>) :
                     name.setBackgroundColor(Color.parseColor("#FFFFFFFF"))
                 }
             }
-            binding.name.setOnLongClickListener{
+            binding.name.setOnLongClickListener {
                 onItemLongClick?.invoke(data, adapterPosition)
                 true
             }
-            val dataChanged = data
             binding.name.setOnClickListener {
-                dataChanged.apply {
-                    deleteItem(adapterPosition)
-                    if (dataChanged.isMarked) {
+                data.apply {
+                    if (data.isMarked) {
                         onItemMarked?.invoke(
                             ChecklistTask(this.id, this.checklistId, this.title, false)
                         )

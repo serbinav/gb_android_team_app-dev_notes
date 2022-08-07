@@ -13,7 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import kotlin.collections.ArrayList
 
 class EditChecklistViewModel(
     private val checklistRepository: ChecklistRepository,
@@ -40,7 +39,7 @@ class EditChecklistViewModel(
         }
     }
 
-    fun updateChecklist(name: String, description: String, data: ArrayList<ChecklistTask>) {
+    fun updateChecklist(name: String, description: String) {
         currentChecklist.value?.let { checklistWithTask ->
             val checklist = checklistWithTask.checklist.copy(
                 title = name,
@@ -49,15 +48,28 @@ class EditChecklistViewModel(
             val checklistId = runBlocking(Dispatchers.IO) {
                 checklistRepository.updateChecklist(checklist)
             }
-            val listTask = arrayListOf<ChecklistTask>()
-            data.forEach { checklistTask ->
-                val task = checklistTask.copy(checklistId = checklistId)
-                viewModelScope.launch(Dispatchers.IO) {
-                    checklistRepository.updateChecklistTask(task)
+
+            if (checklistWithTask.tasks.isNotEmpty() && checklistWithTask.tasks.first().checklistId == 0L) {
+                val listTask = arrayListOf<ChecklistTask>()
+                runBlocking(Dispatchers.IO) {
+                    checklistWithTask.tasks.forEach { checklistTask ->
+                        val task = ChecklistTask(
+                            id = checklistTask.id,
+                            checklistId = checklistId,
+                            title = checklistTask.title,
+                            isMarked = checklistTask.isMarked,
+                            amount = checklistTask.amount,
+                            createdAt = checklistTask.createdAt,
+                        )
+                        viewModelScope.launch(Dispatchers.IO) {
+                            checklistRepository.updateChecklistTask(task)
+                        }
+                        listTask.add(task)
+                    }
                 }
-                listTask.add(task)
+                _currentChecklist.value = ChecklistWithTasks(checklist, listTask)
             }
-            _currentChecklist.value = ChecklistWithTasks(checklist, listTask)
+            _currentChecklist.value = ChecklistWithTasks(checklist, checklistWithTask.tasks)
         }
     }
 
@@ -68,6 +80,19 @@ class EditChecklistViewModel(
                 checklistRepository.deleteChecklistTaskByChecklistId(it.checklist.id)
             }
             _currentChecklist.value = null
+        }
+    }
+
+    fun updateNameDescription(name: String, description: String) {
+        currentChecklist.value?.let { checklistWithTask ->
+            val checklist = checklistWithTask.checklist.copy(
+                title = name,
+                description = description
+            )
+            runBlocking(Dispatchers.IO) {
+                checklistRepository.updateChecklist(checklist)
+            }
+            _currentChecklist.value = ChecklistWithTasks(checklist, checklistWithTask.tasks)
         }
     }
 
