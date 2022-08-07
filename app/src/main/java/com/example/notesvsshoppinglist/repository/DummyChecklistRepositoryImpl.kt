@@ -80,11 +80,24 @@ class DummyChecklistRepositoryImpl : ChecklistRepository {
         TODO("Not yet implemented")
     }
 
-    override fun updateChecklist(checklist: Checklist) {
+    override fun updateChecklist(checklist: Checklist): Long {
         TODO("Not yet implemented")
     }
 
     override fun deleteChecklistById(checklistId: Long) {
         TODO("Not yet implemented")
     }
+
+    override fun getChecklistTaskById(checklistId: Long): List<ChecklistTask>? {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateChecklistTask(checklistTask: ChecklistTask): Long {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteChecklistTaskId(checklistId: Long) {
+        TODO("Not yet implemented")
+    }
+
 }

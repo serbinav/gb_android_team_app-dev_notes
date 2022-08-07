@@ -49,8 +49,5 @@
         android:name="com.example.notesvsshoppinglist.ui.checklist.EditChecklistFragment"
         android:label="@string/title_add_checklist"
         tools:layout="@layout/fragment_edit_checklist">
-        <argument
-            android:name="checklist"
-            app:argType="com.example.notesvsshoppinglist.core.model.ChecklistWithTask" />
     </fragment>
 </navigation>

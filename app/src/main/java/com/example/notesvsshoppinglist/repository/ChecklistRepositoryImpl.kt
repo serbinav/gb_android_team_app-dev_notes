@@ -3,13 +3,16 @@ package com.example.notesvsshoppinglist.repository
 import com.example.notesvsshoppinglist.core.model.ChecklistWithTask
 import com.rino.database.dao.ChecklistGetDao
 import com.rino.database.dao.ChecklistSetDao
+import com.rino.database.dao.ChecklistTaskDao
 import com.rino.database.entity.Checklist
+import com.rino.database.entity.ChecklistTask
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class ChecklistRepositoryImpl(
     private val checklistGetDao: ChecklistGetDao,
-    private val checklistSetDao: ChecklistSetDao
+    private val checklistSetDao: ChecklistSetDao,
+    private val checklistTaskDao: ChecklistTaskDao
 ) : ChecklistRepository {
 
     override fun getAllChecklists(): List<ChecklistWithTask> {
@@ -47,9 +50,19 @@ class ChecklistRepositoryImpl(
     override fun getChecklistById(checklistId: Long): Checklist? =
         checklistGetDao.getChecklistById(checklistId)
 
-    override fun updateChecklist(checklist: Checklist) = checklistSetDao.insertChecklist(checklist)
+    override fun updateChecklist(checklist: Checklist) =
+        checklistSetDao.insertChecklist(checklist)
 
     override fun deleteChecklistById(checklistId: Long) =
         checklistSetDao.deleteChecklistId(checklistId)
+
+    override fun getChecklistTaskById(checklistId: Long): List<ChecklistTask>? =
+        checklistTaskDao.getChecklistTaskById(checklistId)
+
+    override fun updateChecklistTask(checklistTask: ChecklistTask) =
+        checklistTaskDao.insertChecklistTask(checklistTask)
+
+    override fun deleteChecklistTaskId(checklistId: Long) =
+        checklistTaskDao.deleteChecklistTaskId(checklistId)
 
 }

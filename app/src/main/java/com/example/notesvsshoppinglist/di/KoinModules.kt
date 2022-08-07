@@ -18,13 +18,15 @@ val appModule = module {
     single { DatabaseModule.getNoteSetDao(database = get()) }
     single { DatabaseModule.getChecklistGetDao(database = get()) }
     single { DatabaseModule.getChecklistSetDao(database = get()) }
+    single { DatabaseModule.getChecklistTaskDao(database = get()) }
 
     // Repository
     single<NoteRepository> { NoteRepositoryImpl(noteGetDao = get(), noteSetDao = get()) }
     single<ChecklistRepository> {
         ChecklistRepositoryImpl(
             checklistGetDao = get(),
-            checklistSetDao = get()
+            checklistSetDao = get(),
+            checklistTaskDao = get()
         )
     }
 
