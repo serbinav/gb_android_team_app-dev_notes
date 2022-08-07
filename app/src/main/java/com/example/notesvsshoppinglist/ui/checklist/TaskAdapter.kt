@@ -61,6 +61,9 @@ class TaskAdapter(private var data: ArrayList<ChecklistTask>) :
         notifyItemChanged(index)
     }
 
+    //TODO передавать в TaskAdapter ViewModel
+    fun getItems(): ArrayList<ChecklistTask> = data
+
     inner class TaskViewHolder(private val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
