@@ -16,9 +16,9 @@ interface ChecklistTaskDao {
     fun insertChecklistTask(checklistTask: ChecklistTask): Long
 
     @Query("DELETE FROM ChecklistTask WHERE checklistId=:checklistId")
-    fun deleteChecklistTaskId(checklistId: Long)
+    fun deleteChecklistTaskByChecklistId(checklistId: Long)
 
-    @Query("DELETE FROM ChecklistTask WHERE title=:title")
-    fun deleteChecklistTaskTitle(title: String)
+    @Query("DELETE FROM ChecklistTask WHERE id=:checklistTaskId")
+    fun deleteChecklistTaskById(checklistTaskId: Long)
 
 }

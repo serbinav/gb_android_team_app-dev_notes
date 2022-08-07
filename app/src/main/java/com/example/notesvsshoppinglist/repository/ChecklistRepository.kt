@@ -13,6 +13,7 @@ interface ChecklistRepository {
     fun deleteChecklistById(checklistId: Long)
     fun getChecklistTaskById(checklistId: Long): List<ChecklistTask>?
     fun updateChecklistTask(checklistTask: ChecklistTask): Long
-    fun deleteChecklistTaskId(checklistId: Long)
+    fun deleteChecklistTaskByChecklistId(checklistId: Long)
+    fun deleteChecklistTaskById(checklistTaskId: Long)
 
 }

@@ -24,7 +24,7 @@ class ChecklistViewModel(
             checklistRepository.getAllChecklistsFlow()
                 .flowOn(Dispatchers.IO)
                 .collectLatest {
-                    _checklists.value = sortData(it)
+                    _checklists.value = it
                 }
         }
     }

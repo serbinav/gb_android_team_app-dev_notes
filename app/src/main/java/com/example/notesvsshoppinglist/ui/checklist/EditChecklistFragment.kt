@@ -87,12 +87,20 @@ class EditChecklistFragment :
                         positionTask = pos
                         recycler.showContextMenu()
                     }
+                    checklistId = checklistWithTask.checklist.id
                     buttonAddTask.setOnClickListener {
-                        checklistId = checklistWithTask.checklist.id
                         showAddOrEditDialog(
-                            taskAdapter = adapter,
-                            checklistId = checklistId,
-                            lambda = { _, task: ChecklistTask -> adapter.addFirstItem(task) })
+                            lambda = { _, title ->
+                                val task = ChecklistTask(
+                                    id = adapter.itemCount.toLong(),
+                                    checklistId = checklistId,
+                                    title = title,
+                                    isMarked = false
+                                )
+                                adapter.addFirstItem(task)
+                                editChecklistViewModel.updateChecklistTask(task)
+                            }
+                        )
                     }
                 }
             }
@@ -113,12 +121,22 @@ class EditChecklistFragment :
             R.id.act_edit -> showAddOrEditDialog(
                 taskName = checklistTask.title,
                 taskPosition = positionTask,
-                taskMark = checklistTask.isMarked,
-                taskAdapter = adapter,
-                checklistId = checklistId,
                 dialogIcon = R.drawable.ic_baseline_edit_note_24,
-                lambda = { index, task -> adapter.editItem(index, task) })
-            R.id.act_delete -> adapter.deleteItem(positionTask)
+                lambda = { index, title ->
+                    val task = ChecklistTask(
+                        id = checklistTask.id,
+                        checklistId = checklistId,
+                        title = title,
+                        isMarked = checklistTask.isMarked
+                    )
+                    adapter.editItem(index, task)
+                    editChecklistViewModel.updateChecklistTask(task)
+                }
+            )
+            R.id.act_delete -> {
+                adapter.deleteItem(positionTask)
+                editChecklistViewModel.deleteChecklistTask(checklistTask.id)
+            }
             //добавить запрос подтверждение удаления
         }
         return true
@@ -127,12 +145,9 @@ class EditChecklistFragment :
     private fun showAddOrEditDialog(
         taskName: String = "",
         taskPosition: Int = 0,
-        taskMark: Boolean = false,
-        taskAdapter: TaskAdapter,
-        checklistId: Long,
         @DrawableRes
         dialogIcon: Int = R.drawable.ic_baseline_playlist_add_24,
-        lambda: (Int, ChecklistTask) -> Unit
+        lambda: (Int, String) -> Unit
     ) {
         val dialogBinding = DialogEditBinding.inflate(layoutInflater, null, false)
         with(dialogBinding) {
@@ -147,13 +162,7 @@ class EditChecklistFragment :
                 .setView(root)
                 .setPositiveButton(R.string.alert_positive_btn) { _, _ ->
                     if (editElem.text.isNullOrEmpty().not()) {
-                        val task = ChecklistTask(
-                            id = taskAdapter.itemCount.toLong(),
-                            checklistId = checklistId,
-                            title = editElem.text.toString(),
-                            isMarked = taskMark
-                        )
-                        lambda(taskPosition, task)
+                        lambda(taskPosition, editElem.text.toString())
                     }
                 }
                 .setNegativeButton(R.string.alert_negative_btn) { _, _ -> }

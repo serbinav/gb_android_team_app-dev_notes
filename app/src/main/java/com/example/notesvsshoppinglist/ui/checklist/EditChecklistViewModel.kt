@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import kotlin.collections.ArrayList
 
 class EditChecklistViewModel(
     private val checklistRepository: ChecklistRepository,
@@ -51,9 +52,9 @@ class EditChecklistViewModel(
             val listTask = arrayListOf<ChecklistTask>()
             data.forEach { checklistTask ->
                 val task = checklistTask.copy(checklistId = checklistId)
-                    viewModelScope.launch(Dispatchers.IO) {
-                        checklistRepository.updateChecklistTask(task)
-                    }
+                viewModelScope.launch(Dispatchers.IO) {
+                    checklistRepository.updateChecklistTask(task)
+                }
                 listTask.add(task)
             }
             _currentChecklist.value = ChecklistWithTask(checklist, listTask)
@@ -64,9 +65,49 @@ class EditChecklistViewModel(
         currentChecklist.value?.let {
             viewModelScope.launch(Dispatchers.IO) {
                 checklistRepository.deleteChecklistById(it.checklist.id)
-                checklistRepository.deleteChecklistTaskId(it.checklist.id)
+                checklistRepository.deleteChecklistTaskByChecklistId(it.checklist.id)
             }
             _currentChecklist.value = null
+        }
+    }
+
+    fun updateChecklistTask(checklistTask: ChecklistTask) {
+        currentChecklist.value?.let { checklistWithTask ->
+            val checklistTaskId = runBlocking(Dispatchers.IO) {
+                checklistRepository.updateChecklistTask(checklistTask)
+            }
+            val listTask = checklistWithTask.listTask.toMutableList()
+
+            listTask.find {
+                it.id == checklistTaskId
+            }?.let {
+                listTask[listTask.indexOf(it)] =
+                    ChecklistTask(
+                        id = checklistTaskId,
+                        checklistId = checklistTask.checklistId,
+                        title = checklistTask.title,
+                        isMarked = checklistTask.isMarked,
+                        amount = checklistTask.amount,
+                        createdAt = checklistTask.createdAt,
+                    )
+            } ?: listTask.add(checklistTask)
+
+            _currentChecklist.value = ChecklistWithTask(checklistWithTask.checklist, listTask)
+        }
+    }
+
+    fun deleteChecklistTask(checklistTaskId: Long) {
+        currentChecklist.value?.let { checklistWithTask ->
+            viewModelScope.launch(Dispatchers.IO) {
+                checklistRepository.deleteChecklistTaskById(checklistTaskId)
+            }
+            val listTask = checklistWithTask.listTask.toMutableList()
+            listTask.find {
+                it.id == checklistTaskId
+            }?.let {
+                listTask.remove(it)
+            }
+            _currentChecklist.value = ChecklistWithTask(checklistWithTask.checklist, listTask)
         }
     }
 }
