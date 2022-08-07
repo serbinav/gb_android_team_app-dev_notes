@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.notesvsshoppinglist.core.model.ChecklistWithTask
 import com.example.notesvsshoppinglist.provider.StringProvider
 import com.example.notesvsshoppinglist.repository.ChecklistRepository
 import com.rino.database.entity.Checklist
 import com.rino.database.entity.ChecklistTask
+import com.rino.database.entity.ChecklistWithTasks
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -20,8 +20,8 @@ class EditChecklistViewModel(
     private val checklistId: Long,
     private val stringProvider: StringProvider
 ) : ViewModel() {
-    private val _currentChecklist = MutableLiveData<ChecklistWithTask>()
-    val currentChecklist: LiveData<ChecklistWithTask> = _currentChecklist
+    private val _currentChecklist = MutableLiveData<ChecklistWithTasks>()
+    val currentChecklist: LiveData<ChecklistWithTasks> = _currentChecklist
 
     init {
         viewModelScope.launch {
@@ -35,7 +35,7 @@ class EditChecklistViewModel(
                 val listTask = checklistRepository.getChecklistTaskById(checklistId)
                     ?: arrayListOf()
 
-                ChecklistWithTask(checklist, listTask)
+                ChecklistWithTasks(checklist, listTask)
             }
         }
     }
@@ -57,7 +57,7 @@ class EditChecklistViewModel(
                 }
                 listTask.add(task)
             }
-            _currentChecklist.value = ChecklistWithTask(checklist, listTask)
+            _currentChecklist.value = ChecklistWithTasks(checklist, listTask)
         }
     }
 
@@ -76,7 +76,7 @@ class EditChecklistViewModel(
             val checklistTaskId = runBlocking(Dispatchers.IO) {
                 checklistRepository.updateChecklistTask(checklistTask)
             }
-            val listTask = checklistWithTask.listTask.toMutableList()
+            val listTask = checklistWithTask.tasks.toMutableList()
 
             listTask.find {
                 it.id == checklistTaskId
@@ -92,7 +92,7 @@ class EditChecklistViewModel(
                     )
             } ?: listTask.add(checklistTask)
 
-            _currentChecklist.value = ChecklistWithTask(checklistWithTask.checklist, listTask)
+            _currentChecklist.value = ChecklistWithTasks(checklistWithTask.checklist, listTask)
         }
     }
 
@@ -101,13 +101,13 @@ class EditChecklistViewModel(
             viewModelScope.launch(Dispatchers.IO) {
                 checklistRepository.deleteChecklistTaskById(checklistTaskId)
             }
-            val listTask = checklistWithTask.listTask.toMutableList()
+            val listTask = checklistWithTask.tasks.toMutableList()
             listTask.find {
                 it.id == checklistTaskId
             }?.let {
                 listTask.remove(it)
             }
-            _currentChecklist.value = ChecklistWithTask(checklistWithTask.checklist, listTask)
+            _currentChecklist.value = ChecklistWithTasks(checklistWithTask.checklist, listTask)
         }
     }
 }

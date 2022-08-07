@@ -2,7 +2,6 @@ package com.example.notesvsshoppinglist.repository
 
 import com.rino.database.entity.Checklist
 import com.rino.database.entity.ChecklistTask
-import com.example.notesvsshoppinglist.core.model.ChecklistWithTask
 import com.rino.database.entity.ChecklistWithTasks
 import kotlinx.coroutines.flow.Flow
 

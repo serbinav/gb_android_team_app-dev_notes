@@ -74,7 +74,7 @@ class EditChecklistFragment :
                     date.text = checklistWithTask.checklist.createdAt.toFormatString()
                     description.setText(checklistWithTask.checklist.description)
 
-                    adapter = TaskAdapter(checklistWithTask.listTask.toCollection(arrayListOf()))
+                    adapter = TaskAdapter(checklistWithTask.tasks.toCollection(arrayListOf()))
                     recycler.adapter = adapter
                     adapter.onItemUnmarked = { data ->
                         adapter.addItem(data)

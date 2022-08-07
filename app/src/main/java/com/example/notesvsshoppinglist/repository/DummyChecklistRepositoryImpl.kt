@@ -1,14 +1,11 @@
 package com.example.notesvsshoppinglist.repository
 
-import com.example.notesvsshoppinglist.core.model.ChecklistWithTask
 import com.example.notesvsshoppinglist.core.utils.getDate
 import com.rino.database.entity.Checklist
 import com.rino.database.entity.ChecklistTask
 import com.rino.database.entity.ChecklistWithTasks
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 
 class DummyChecklistRepositoryImpl : ChecklistRepository {
     private val fakeChecklists = arrayListOf(
