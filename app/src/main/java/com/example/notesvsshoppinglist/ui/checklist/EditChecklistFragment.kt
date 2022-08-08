@@ -27,6 +27,7 @@ class EditChecklistFragment :
     }
 
     private lateinit var adapter: TaskAdapter
+
     //TODO проверить нет ли тут бага
     private var checklistId: Long = 0L
     private lateinit var checklistTask: ChecklistTask
@@ -101,7 +102,6 @@ class EditChecklistFragment :
                         showAddOrEditDialog(
                             lambda = { _, title ->
                                 val task = ChecklistTask(
-                                    id = adapter.itemCount.toLong(),
                                     checklistId = checklistId,
                                     title = title,
                                     isMarked = false

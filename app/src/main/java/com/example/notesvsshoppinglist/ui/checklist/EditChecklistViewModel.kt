@@ -29,7 +29,6 @@ class EditChecklistViewModel(
                     ?: Checklist(id = 0L, title = stringProvider.newNote, description = "", false)
 
                 val listTask = checklistRepository.getChecklistTaskById(checklistId)
-                    ?: arrayListOf()
 
                 ChecklistWithTasks(checklist, listTask)
             }
@@ -47,23 +46,15 @@ class EditChecklistViewModel(
 
             updatedChecklist = updatedChecklist.copy(id = checklistId)
 
-            if (checklistWithTasks.tasks.isNotEmpty() && checklistWithTasks.tasks.first().checklistId == 0L) {
-                val updatedTasks = runBlocking(Dispatchers.IO) {
-                    checklistWithTasks.tasks.map { task ->
-                        val updatedTask = task.copy(checklistId = checklistId)
-
-                        viewModelScope.launch(Dispatchers.IO) {
-                            checklistRepository.updateChecklistTask(updatedTask)
-                        }
-
-                        updatedTask
-                    }.toList()
+            val updatedTasks = checklistWithTasks.tasks.map { task ->
+                val updatedTask = task.copy(checklistId = checklistId)
+                val taskId = runBlocking(Dispatchers.IO) {
+                    checklistRepository.updateChecklistTask(updatedTask)
                 }
-
-                _currentChecklist.value = ChecklistWithTasks(updatedChecklist, updatedTasks)
-            } else {
-                _currentChecklist.value = checklistWithTasks.copy(checklist = updatedChecklist)
+                updatedTask.copy(id = taskId)
             }
+
+            _currentChecklist.value = ChecklistWithTasks(updatedChecklist, updatedTasks)
         }
     }
 
@@ -93,42 +84,28 @@ class EditChecklistViewModel(
     }
 
     fun updateChecklistTask(checklistTask: ChecklistTask) {
-        currentChecklist.value?.let { checklistWithTask ->
-            val checklistTaskId = runBlocking(Dispatchers.IO) {
-                checklistRepository.updateChecklistTask(checklistTask)
+        viewModelScope.launch {
+            currentChecklist.value?.let { checklistWithTask ->
+                val listTask = withContext(Dispatchers.IO) {
+                    val updatedTask = checklistTask.copy(checklistId = checklistWithTask.checklist.id)
+                    checklistRepository.updateChecklistTask(updatedTask)
+                    checklistRepository.getChecklistTaskById(checklistWithTask.checklist.id)
+                }
+                _currentChecklist.value = checklistWithTask.copy(tasks = listTask)
             }
-            val listTask = checklistWithTask.tasks.toMutableList()
-
-            listTask.find {
-                it.id == checklistTaskId
-            }?.let {
-                listTask[listTask.indexOf(it)] =
-                    ChecklistTask(
-                        id = checklistTaskId,
-                        checklistId = checklistTask.checklistId,
-                        title = checklistTask.title,
-                        isMarked = checklistTask.isMarked,
-                        amount = checklistTask.amount,
-                        createdAt = checklistTask.createdAt,
-                    )
-            } ?: listTask.add(checklistTask)
-
-            _currentChecklist.value = ChecklistWithTasks(checklistWithTask.checklist, listTask)
         }
     }
 
     fun deleteChecklistTask(checklistTaskId: Long) {
-        currentChecklist.value?.let { checklistWithTask ->
-            viewModelScope.launch(Dispatchers.IO) {
-                checklistRepository.deleteChecklistTaskById(checklistTaskId)
+        viewModelScope.launch {
+            currentChecklist.value?.let { checklistWithTask ->
+                val listTask = withContext(Dispatchers.IO) {
+                    checklistRepository.deleteChecklistTaskById(checklistTaskId)
+                    checklistRepository.getChecklistTaskById(checklistId)
+                }
+                _currentChecklist.value = checklistWithTask.copy(tasks = listTask)
             }
-            val listTask = checklistWithTask.tasks.toMutableList()
-            listTask.find {
-                it.id == checklistTaskId
-            }?.let {
-                listTask.remove(it)
-            }
-            _currentChecklist.value = ChecklistWithTasks(checklistWithTask.checklist, listTask)
         }
     }
+
 }

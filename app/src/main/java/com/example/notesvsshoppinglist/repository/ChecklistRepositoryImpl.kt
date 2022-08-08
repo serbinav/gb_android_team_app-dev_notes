@@ -28,7 +28,7 @@ class ChecklistRepositoryImpl(
     override fun deleteChecklistById(checklistId: Long) =
         checklistSetDao.deleteChecklistId(checklistId)
 
-    override fun getChecklistTaskById(checklistId: Long): List<ChecklistTask>? =
+    override fun getChecklistTaskById(checklistId: Long): List<ChecklistTask> =
         checklistTaskDao.getChecklistTaskById(checklistId)
 
     override fun updateChecklistTask(checklistTask: ChecklistTask) =

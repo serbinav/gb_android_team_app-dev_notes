@@ -8,7 +8,7 @@ import java.util.*
 @Entity
 data class ChecklistTask(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long = 0L,
     @ColumnInfo(name = "checklistId")
     val checklistId: Long,
     @ColumnInfo(name = "title")

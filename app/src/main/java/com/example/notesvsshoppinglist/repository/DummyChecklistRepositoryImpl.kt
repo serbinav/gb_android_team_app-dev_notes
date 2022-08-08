@@ -88,7 +88,7 @@ class DummyChecklistRepositoryImpl : ChecklistRepository {
         TODO("Not yet implemented")
     }
 
-    override fun getChecklistTaskById(checklistId: Long): List<ChecklistTask>? {
+    override fun getChecklistTaskById(checklistId: Long): List<ChecklistTask> {
         TODO("Not yet implemented")
     }
 

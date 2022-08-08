@@ -10,7 +10,7 @@ import com.rino.database.entity.ChecklistTask
 interface ChecklistTaskDao {
 
     @Query("SELECT * FROM ChecklistTask WHERE checklistId = :checklistId")
-    fun getChecklistTaskById(checklistId: Long): List<ChecklistTask>?
+    fun getChecklistTaskById(checklistId: Long): List<ChecklistTask>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertChecklistTask(checklistTask: ChecklistTask): Long
