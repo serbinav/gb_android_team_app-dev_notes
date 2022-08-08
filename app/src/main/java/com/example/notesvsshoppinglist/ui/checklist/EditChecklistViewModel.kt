@@ -25,12 +25,9 @@ class EditChecklistViewModel(
     init {
         viewModelScope.launch {
             _currentChecklist.value = withContext(Dispatchers.IO) {
-                val checklist = checklistRepository.getChecklistById(checklistId) ?: Checklist(
-                    id = 0L,
-                    title = stringProvider.newNote,
-                    description = "",
-                    false
-                )
+                val checklist = checklistRepository.getChecklistById(checklistId)
+                    ?: Checklist(id = 0L, title = stringProvider.newNote, description = "", false)
+
                 val listTask = checklistRepository.getChecklistTaskById(checklistId)
                     ?: arrayListOf()
 
@@ -40,36 +37,33 @@ class EditChecklistViewModel(
     }
 
     fun updateChecklist(name: String, description: String) {
-        currentChecklist.value?.let { checklistWithTask ->
-            val checklist = checklistWithTask.checklist.copy(
-                title = name,
-                description = description
-            )
+        currentChecklist.value?.let { checklistWithTasks ->
+            var updatedChecklist = checklistWithTasks.checklist
+                .copy(title = name, description = description)
+
             val checklistId = runBlocking(Dispatchers.IO) {
-                checklistRepository.updateChecklist(checklist)
+                checklistRepository.updateChecklist(updatedChecklist)
             }
 
-            if (checklistWithTask.tasks.isNotEmpty() && checklistWithTask.tasks.first().checklistId == 0L) {
-                val listTask = arrayListOf<ChecklistTask>()
-                runBlocking(Dispatchers.IO) {
-                    checklistWithTask.tasks.forEach { checklistTask ->
-                        val task = ChecklistTask(
-                            id = checklistTask.id,
-                            checklistId = checklistId,
-                            title = checklistTask.title,
-                            isMarked = checklistTask.isMarked,
-                            amount = checklistTask.amount,
-                            createdAt = checklistTask.createdAt,
-                        )
+            updatedChecklist = updatedChecklist.copy(id = checklistId)
+
+            if (checklistWithTasks.tasks.isNotEmpty() && checklistWithTasks.tasks.first().checklistId == 0L) {
+                val updatedTasks = runBlocking(Dispatchers.IO) {
+                    checklistWithTasks.tasks.map { task ->
+                        val updatedTask = task.copy(checklistId = checklistId)
+
                         viewModelScope.launch(Dispatchers.IO) {
-                            checklistRepository.updateChecklistTask(task)
+                            checklistRepository.updateChecklistTask(updatedTask)
                         }
-                        listTask.add(task)
-                    }
+
+                        updatedTask
+                    }.toList()
                 }
-                _currentChecklist.value = ChecklistWithTasks(checklist, listTask)
+
+                _currentChecklist.value = ChecklistWithTasks(updatedChecklist, updatedTasks)
+            } else {
+                _currentChecklist.value = checklistWithTasks.copy(checklist = updatedChecklist)
             }
-            _currentChecklist.value = ChecklistWithTasks(checklist, checklistWithTask.tasks)
         }
     }
 
@@ -85,14 +79,16 @@ class EditChecklistViewModel(
 
     fun updateNameDescription(name: String, description: String) {
         currentChecklist.value?.let { checklistWithTask ->
-            val checklist = checklistWithTask.checklist.copy(
-                title = name,
-                description = description
-            )
-            runBlocking(Dispatchers.IO) {
-                checklistRepository.updateChecklist(checklist)
+            var updatedChecklist = checklistWithTask.checklist
+                .copy(title = name, description = description)
+
+            val checklistId = runBlocking(Dispatchers.IO) {
+                checklistRepository.updateChecklist(updatedChecklist)
             }
-            _currentChecklist.value = ChecklistWithTasks(checklist, checklistWithTask.tasks)
+
+            updatedChecklist = updatedChecklist.copy(id = checklistId)
+
+            _currentChecklist.value = checklistWithTask.copy(checklist = updatedChecklist)
         }
     }
 
