@@ -31,9 +31,13 @@ object Versions {
     const val NAVIGATION = "2.5.0"
     const val JUNIT = "4.13.2"
     const val JUNIT_ANDROID = "1.1.3"
-    const val ESPRESSO = "3.4.0"
+    const val ESPRESSO = "3.3.0"
     const val ROOM = "2.4.2"
     const val KOIN = "3.2.0"
+    const val FRAGMENT_TEST = "1.3.3"
+    const val ESPRESSO_CONTRIB = "3.3.0"
+    const val RUNNER = "1.3.0"
+    const val RULES = "1.3.0"
 }
 
 object Libraries {
@@ -65,4 +69,9 @@ object Libraries {
     const val JUNIT = "junit:junit:${Versions.JUNIT}"
     const val JUNIT_ANDROID = "androidx.test.ext:junit:${Versions.JUNIT_ANDROID}"
     const val ESPRESSO = "androidx.test.espresso:espresso-core:${Versions.ESPRESSO}"
+    const val FRAGMENT_TEST = "androidx.fragment:fragment-testing:${Versions.FRAGMENT_TEST}"
+    const val ESPRESSO_CONTRIB = "androidx.test.espresso:espresso-contrib:${Versions.ESPRESSO_CONTRIB}"
+
+    const val RUNNER = "androidx.test:runner:${Versions.RUNNER}"
+    const val RULES = "androidx.test:rules:${Versions.RULES}"
 }

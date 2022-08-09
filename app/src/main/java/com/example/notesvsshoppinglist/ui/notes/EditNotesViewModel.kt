@@ -24,7 +24,7 @@ class EditNotesViewModel(
         viewModelScope.launch {
             _currentNote.value = withContext(Dispatchers.IO) {
                 noteRepository.getNoteById(noteId) ?: Note(
-                    title = stringProvider.newNote,
+                    title = "",
                     description = ""
                 )
             }
