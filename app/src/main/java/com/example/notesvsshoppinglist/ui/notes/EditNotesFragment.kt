@@ -27,7 +27,7 @@ class EditNotesFragment :
     private val menuProvider by lazy {
         object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.edit_note_menu, menu)
+                menuInflater.inflate(R.menu.edit_menu, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {

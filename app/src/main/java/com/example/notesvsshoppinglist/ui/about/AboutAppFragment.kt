@@ -1,4 +1,4 @@
-package com.example.notesvsshoppinglist.ui.settings
+package com.example.notesvsshoppinglist.ui.about
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
@@ -6,11 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.notesvsshoppinglist.databinding.FragmentSettingsBinding
+import com.example.notesvsshoppinglist.databinding.FragmentAboutAppBinding
 
-class SettingsFragment : Fragment() {
+class AboutAppFragment : Fragment() {
 
-    private var _binding: FragmentSettingsBinding? = null
+    private var _binding: FragmentAboutAppBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -18,7 +18,7 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        _binding = FragmentAboutAppBinding.inflate(inflater, container, false)
         return binding.root
     }
 
