@@ -15,4 +15,6 @@ object DatabaseModule {
 
     fun getChecklistGetDao(database: AppDatabase) = database.checklistGetDao
     fun getChecklistSetDao(database: AppDatabase) = database.checklistSetDao
+
+    fun getChecklistTaskDao(database: AppDatabase) = database.checklistTaskDao
 }

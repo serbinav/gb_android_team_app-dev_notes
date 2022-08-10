@@ -1,15 +1,15 @@
 package com.example.notesvsshoppinglist.repository
 
-import com.example.notesvsshoppinglist.core.model.ChecklistWithTask
 import com.example.notesvsshoppinglist.core.utils.getDate
 import com.rino.database.entity.Checklist
 import com.rino.database.entity.ChecklistTask
+import com.rino.database.entity.ChecklistWithTasks
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class DummyChecklistRepositoryImpl : ChecklistRepository {
     private val fakeChecklists = arrayListOf(
-        ChecklistWithTask(
+        ChecklistWithTasks(
             Checklist(
                 1,
                 "Здесь могла быть ваша реклама, очень очень много вашей рекламы и можно даже еще немного больше",
@@ -19,7 +19,7 @@ class DummyChecklistRepositoryImpl : ChecklistRepository {
             ),
             arrayListOf(),
         ),
-        ChecklistWithTask(
+        ChecklistWithTasks(
             Checklist(
                 2,
                 "Нужный список",
@@ -33,7 +33,7 @@ class DummyChecklistRepositoryImpl : ChecklistRepository {
                 ChecklistTask(3, 2, "рубанок", false),
             )
         ),
-        ChecklistWithTask(
+        ChecklistWithTasks(
             Checklist(
                 3,
                 "Свободный",
@@ -54,7 +54,7 @@ class DummyChecklistRepositoryImpl : ChecklistRepository {
                 ChecklistTask(10, 3, "свинья", true),
             )
         ),
-        ChecklistWithTask(
+        ChecklistWithTasks(
             Checklist(
                 4,
                 "Новогодний ",
@@ -71,20 +71,37 @@ class DummyChecklistRepositoryImpl : ChecklistRepository {
         ),
     )
 
-    override fun getAllChecklists(): List<ChecklistWithTask> = fakeChecklists
+    override fun getAllChecklists(): List<ChecklistWithTasks> = fakeChecklists
 
-    override fun getAllChecklistsFlow(): Flow<List<ChecklistWithTask>> =
+    override fun getAllChecklistsWithTasksFlow(): Flow<ArrayList<ChecklistWithTasks>> =
         flow { emit(fakeChecklists) }
 
     override fun getChecklistById(checklistId: Long): Checklist? {
         TODO("Not yet implemented")
     }
 
-    override fun updateChecklist(checklist: Checklist) {
+    override fun updateChecklist(checklist: Checklist): Long {
         TODO("Not yet implemented")
     }
 
     override fun deleteChecklistById(checklistId: Long) {
         TODO("Not yet implemented")
     }
+
+    override fun getChecklistTaskById(checklistId: Long): List<ChecklistTask> {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateChecklistTask(checklistTask: ChecklistTask): Long {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteChecklistTaskByChecklistId(checklistId: Long) {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteChecklistTaskById(checklistTaskId: Long) {
+        TODO("Not yet implemented")
+    }
+
 }
