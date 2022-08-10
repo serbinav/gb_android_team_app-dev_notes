@@ -1,14 +1,14 @@
-package com.example.notesvsshoppinglist
+package com.example.notesvsshoppinglist.notes_test
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import junit.framework.Assert.assertNotNull
-import junit.framework.Assert.assertNull
+import com.example.notesvsshoppinglist.MainActivity
+import com.example.notesvsshoppinglist.R
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -42,38 +42,28 @@ class AddNotesFragmentTest {
 
         onView(withId(R.id.description)).perform(click())
         onView(withId(R.id.description)).perform(
-            ViewActions.replaceText(descriptionNote),
-            ViewActions.closeSoftKeyboard()
+            replaceText(descriptionNote),
+            closeSoftKeyboard()
         )
 
         onView(withId(R.id.toolbar)).perform(pressBack())
 
-        assertNotNull(
-            onView(withText(nameNote)).check(matches(isDisplayed()))
-        )
+        onView(withText(nameNote)).check(matches(isDisplayed()))
+
     }
 
-
-
-    /**
-     *
-     * Не получается реализовать нажатие кнопки в toolbar
-     *
-     * */
     @Test
     fun delete_note_test(){
 
         val nameNote = "Интересный факт"
 
-        assertNotNull(
-            onView(withText(nameNote)).check(matches(isDisplayed()))
-        )
+        onView(withText(nameNote)).check(matches(isDisplayed()))
 
         onView(withText(nameNote)).perform(click())
 
-        assertNull(
-            onView(withText(nameNote)).check(matches(isDisplayed()))
-        )
+        onView(withId(R.id.action_delete)).perform(click())
+
+        onView(withText(nameNote)).check(doesNotExist())
     }
 
     @After

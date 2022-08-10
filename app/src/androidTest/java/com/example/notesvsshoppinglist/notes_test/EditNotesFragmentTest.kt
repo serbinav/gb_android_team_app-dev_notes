@@ -1,4 +1,4 @@
-package com.example.notesvsshoppinglist
+package com.example.notesvsshoppinglist.notes_test
 
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -7,6 +7,8 @@ import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.notesvsshoppinglist.R
+import com.example.notesvsshoppinglist.getCurrentDateTime_test
 import com.example.notesvsshoppinglist.ui.notes.EditNotesFragment
 import org.junit.Before
 import org.junit.Test
@@ -20,6 +22,17 @@ class EditNotesFragmentTest {
     @Before
     fun setup(){
         scenario = launchFragmentInContainer()
+    }
+
+    @Test
+    fun date_header_test_is_displayed(){
+        onView(withId(R.id.date_header)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun date_matches_the_software_test(){
+        val date = getCurrentDateTime_test()
+        onView(withId(R.id.date)).check(matches(withText(date)))
     }
 
     @Test

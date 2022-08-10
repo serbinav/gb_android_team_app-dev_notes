@@ -6,6 +6,9 @@ import android.view.View
 import androidx.test.espresso.matcher.BoundedMatcher
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.hamcrest.Description
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashSet
 
 object EspressoUtils {
     fun hasCheckedItem(id: Int): BoundedMatcher<View?, BottomNavigationView> {
@@ -45,4 +48,13 @@ object EspressoUtils {
             }
         }
     }
+}
+
+fun getCurrentDateTime_test(): String {
+    val date = Calendar.getInstance()
+
+    val format = "dd.MM.yyyy"
+    val formatter = SimpleDateFormat(format)
+
+    return formatter.format(date.time)
 }

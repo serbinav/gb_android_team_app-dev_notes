@@ -43,8 +43,8 @@ class NavigationEspressoTest {
 
     @Test
     fun bottomNavigation_settingsFragmentClick() {
-        onView(withId(R.id.navigation_settings)).perform(click())
-        onView(withId(R.id.nav_view)).check(matches(hasCheckedItem(R.id.navigation_settings)))
+        onView(withId(R.id.navigation_about_app)).perform(click())
+        onView(withId(R.id.nav_view)).check(matches(hasCheckedItem(R.id.navigation_about_app)))
     }
 
     @After
