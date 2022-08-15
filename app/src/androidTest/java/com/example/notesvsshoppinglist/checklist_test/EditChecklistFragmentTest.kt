@@ -2,29 +2,25 @@ package com.example.notesvsshoppinglist.checklist_test
 
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.notesvsshoppinglist.R
-import com.example.notesvsshoppinglist.atPosition
+import com.example.notesvsshoppinglist.descriptionRandom
 import com.example.notesvsshoppinglist.getCurrentDateTime_test
+import com.example.notesvsshoppinglist.nameRandom
 import com.example.notesvsshoppinglist.ui.checklist.EditChecklistFragment
-import com.example.notesvsshoppinglist.ui.checklist.TaskAdapter
-import com.example.notesvsshoppinglist.ui.notes.EditNotesFragment
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class EditChecklistFragmentTest {
+
+    private val nameNote = nameRandom()
+    private val descriptionNote = descriptionRandom()
 
     private lateinit var scenario: FragmentScenario<EditChecklistFragment>
 
@@ -63,11 +59,9 @@ class EditChecklistFragmentTest {
         onView(withId(R.id.name))
             .check(matches(withText("")))
 
-        val testText = "Проверка ввода текста"
-
         onView(withId(R.id.name)).perform(click())
-        onView(withId(R.id.name)).perform(replaceText(testText), closeSoftKeyboard())
-        onView(withId(R.id.name)).check(matches(withText(testText)))
+        onView(withId(R.id.name)).perform(replaceText(nameNote), closeSoftKeyboard())
+        onView(withId(R.id.name)).check(matches(withText(nameNote)))
     }
 
     @Test
@@ -75,13 +69,11 @@ class EditChecklistFragmentTest {
         onView(withId(R.id.description))
             .check(matches(withText("")))
 
-        val testText = "Проверка ввода текста"
-
         onView(withId(R.id.description)).perform(click())
         onView(withId(R.id.description))
-            .perform(replaceText(testText), closeSoftKeyboard())
+            .perform(replaceText(descriptionNote), closeSoftKeyboard())
         onView(withId(R.id.description))
-            .check(matches(withText(testText)))
+            .check(matches(withText(descriptionNote)))
     }
 
     @Test

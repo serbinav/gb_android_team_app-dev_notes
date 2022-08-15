@@ -9,6 +9,8 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.notesvsshoppinglist.MainActivity
 import com.example.notesvsshoppinglist.R
+import com.example.notesvsshoppinglist.descriptionRandom
+import com.example.notesvsshoppinglist.nameRandom
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -17,6 +19,8 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class AddNotesFragmentTest {
+    private val nameNote = nameRandom()
+    private val descriptionNote = descriptionRandom()
 
     private lateinit var scenario: ActivityScenario<MainActivity>
 
@@ -31,11 +35,8 @@ class AddNotesFragmentTest {
     }
 
     @Test
-    fun add_note_test(){
+    fun add_delete_note_test(){
         onView(withId(R.id.fab_notes)).perform(click())
-
-        val nameNote = "Интересный факт"
-        val descriptionNote = "В среднем самые высокие люди – голландцы."
 
         onView(withId(R.id.name)).perform(click())
         onView(withId(R.id.name)).perform(replaceText(nameNote), closeSoftKeyboard())
@@ -50,13 +51,10 @@ class AddNotesFragmentTest {
 
         onView(withText(nameNote)).check(matches(isDisplayed()))
 
+        delete_note_test()
     }
 
-    @Test
-    fun delete_note_test(){
-
-        val nameNote = "Интересный факт"
-
+    private fun delete_note_test(){
         onView(withText(nameNote)).check(matches(isDisplayed()))
 
         onView(withText(nameNote)).perform(click())

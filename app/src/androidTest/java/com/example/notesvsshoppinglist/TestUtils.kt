@@ -3,12 +3,9 @@ package com.example.notesvsshoppinglist
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.annotation.NonNull
-import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.matcher.BoundedMatcher
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.hamcrest.Description
-import org.hamcrest.Matcher
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -63,13 +60,13 @@ fun getCurrentDateTime_test(): String {
 }
 
 fun nameRandom(): String{
-    return "Факт №" + (0..1000).random()
+    return "Факт №" + (0..100000).shuffled().first()
 }
 
 fun descriptionRandom(): String{
-    return "В среднем самые высокие люди – голландцы."
+    return "В среднем самые высокие люди – голландцы. Их рост " + (1000..2000).shuffled().first()
 }
 
 fun taskRandom(): String{
-    return "Элемент списка №" + (0..1000).random()
+    return "Элемент списка №" + (0..1000).shuffled().first()
 }

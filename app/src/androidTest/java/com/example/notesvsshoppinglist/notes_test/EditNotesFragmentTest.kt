@@ -8,7 +8,9 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.notesvsshoppinglist.R
+import com.example.notesvsshoppinglist.descriptionRandom
 import com.example.notesvsshoppinglist.getCurrentDateTime_test
+import com.example.notesvsshoppinglist.nameRandom
 import com.example.notesvsshoppinglist.ui.notes.EditNotesFragment
 import org.junit.Before
 import org.junit.Test
@@ -17,6 +19,10 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class EditNotesFragmentTest {
+
+    private val nameNote = nameRandom()
+    private val descriptionNote = descriptionRandom()
+
     private lateinit var scenario: FragmentScenario<EditNotesFragment>
 
     @Before
@@ -49,22 +55,18 @@ class EditNotesFragmentTest {
     fun name_test_is_filling(){
         onView(withId(R.id.name)).check(matches(withText("")))
 
-        val testText = "Проверка ввода текста"
-
         onView(withId(R.id.name)).perform(click())
-        onView(withId(R.id.name)).perform(replaceText(testText), closeSoftKeyboard())
-        onView(withId(R.id.name)).check(matches(withText(testText)))
+        onView(withId(R.id.name)).perform(replaceText(nameNote), closeSoftKeyboard())
+        onView(withId(R.id.name)).check(matches(withText(nameNote)))
     }
 
     @Test
     fun description_test_is_filling(){
         onView(withId(R.id.description)).check(matches(withText("")))
 
-        val testText = "Проверка ввода текста"
-
         onView(withId(R.id.description)).perform(click())
-        onView(withId(R.id.description)).perform(replaceText(testText), closeSoftKeyboard())
-        onView(withId(R.id.description)).check(matches(withText(testText)))
+        onView(withId(R.id.description)).perform(replaceText(descriptionNote), closeSoftKeyboard())
+        onView(withId(R.id.description)).check(matches(withText(descriptionNote)))
     }
 
 }

@@ -37,7 +37,7 @@ class AddChecklistFragmentTest {
     }
 
     @Test
-    fun add_checklist_test(){
+    fun add_delete_checklist_test(){
         onView(withId(R.id.navigation_checklist)).perform(click())
 
         onView(withId(R.id.fab_checklist)).perform(click())
@@ -59,6 +59,18 @@ class AddChecklistFragmentTest {
 
         onView(withText(nameNote)).check(matches(isDisplayed()))
 
+        delete_checklist_test()
+    }
+
+
+    private fun delete_checklist_test(){
+        onView(withText(nameNote)).check(matches(isDisplayed()))
+
+        onView(withText(nameNote)).perform(click())
+
+        onView(withId(R.id.action_delete)).perform(click())
+
+        onView(withText(nameNote)).check(doesNotExist())
     }
 
     private fun add_task_test() {
