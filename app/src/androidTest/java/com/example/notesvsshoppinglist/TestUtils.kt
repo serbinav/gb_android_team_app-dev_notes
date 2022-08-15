@@ -3,12 +3,15 @@ package com.example.notesvsshoppinglist
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.NonNull
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.matcher.BoundedMatcher
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.hamcrest.Description
+import org.hamcrest.Matcher
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashSet
+
 
 object EspressoUtils {
     fun hasCheckedItem(id: Int): BoundedMatcher<View?, BottomNavigationView> {
@@ -57,4 +60,16 @@ fun getCurrentDateTime_test(): String {
     val formatter = SimpleDateFormat(format)
 
     return formatter.format(date.time)
+}
+
+fun nameRandom(): String{
+    return "Факт №" + (0..1000).random()
+}
+
+fun descriptionRandom(): String{
+    return "В среднем самые высокие люди – голландцы."
+}
+
+fun taskRandom(): String{
+    return "Элемент списка №" + (0..1000).random()
 }

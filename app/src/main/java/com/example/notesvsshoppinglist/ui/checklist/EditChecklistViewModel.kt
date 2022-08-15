@@ -26,7 +26,7 @@ class EditChecklistViewModel(
         viewModelScope.launch {
             _currentChecklist.value = withContext(Dispatchers.IO) {
                 val checklist = checklistRepository.getChecklistById(checklistId)
-                    ?: Checklist(id = 0L, title = stringProvider.newNote, description = "", false)
+                    ?: Checklist(id = 0L, title = "", description = "", false)
 
                 val listTask = checklistRepository.getChecklistTaskById(checklistId)
 
