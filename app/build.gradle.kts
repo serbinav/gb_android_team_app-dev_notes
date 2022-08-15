@@ -65,4 +65,11 @@ dependencies {
     testImplementation(Libraries.JUNIT)
     androidTestImplementation(Libraries.JUNIT_ANDROID)
     androidTestImplementation(Libraries.ESPRESSO)
+    debugImplementation(Libraries.FRAGMENT_TEST)
+    debugImplementation(Libraries.ESPRESSO_CONTRIB)
+
+    androidTestImplementation(Libraries.RUNNER)
+    androidTestImplementation(Libraries.RULES)
+    debugImplementation(Libraries.ESPRESSO_CONTRIB)
+
 }
