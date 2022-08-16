@@ -14,7 +14,9 @@ class NoteRepositoryImpl(
 
     override fun getAllNotesFlow(): Flow<List<Note>> = noteGetDao.getAllNotesFlow()
 
-    override fun updateNote(note: Note) = noteSetDao.insertNote(note)
+    override fun getNoteById(noteId: Long): Note? = noteGetDao.getNoteById(noteId)
+
+    override fun updateNote(note: Note):Long = noteSetDao.insertNote(note)
 
     override fun deleteNoteById(noteId: Long) = noteSetDao.deleteNoteById(noteId)
 

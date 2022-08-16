@@ -4,10 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.rino.database.converter.DateConverter
-import com.rino.database.dao.ChecklistGetDao
-import com.rino.database.dao.ChecklistSetDao
-import com.rino.database.dao.NoteGetDao
-import com.rino.database.dao.NoteSetDao
+import com.rino.database.dao.*
 import com.rino.database.entity.Checklist
 import com.rino.database.entity.ChecklistTask
 import com.rino.database.entity.Note
@@ -26,4 +23,6 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract val checklistGetDao: ChecklistGetDao
     abstract val checklistSetDao: ChecklistSetDao
+
+    abstract val checklistTaskDao: ChecklistTaskDao
 }

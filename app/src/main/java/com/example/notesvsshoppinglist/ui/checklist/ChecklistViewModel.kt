@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.notesvsshoppinglist.core.model.ChecklistWithTask
 import com.example.notesvsshoppinglist.repository.ChecklistRepository
+import com.rino.database.entity.ChecklistWithTasks
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
@@ -15,37 +15,17 @@ class ChecklistViewModel(
     checklistRepository: ChecklistRepository
 ) : ViewModel() {
 
-    private val _checklists = MutableLiveData<List<ChecklistWithTask>>(listOf())
-    val checklists: LiveData<List<ChecklistWithTask>> = _checklists
+    private val _checklists = MutableLiveData<List<ChecklistWithTasks>>(listOf())
+    val checklists: LiveData<List<ChecklistWithTasks>> = _checklists
 
     init {
         viewModelScope.launch {
-            checklistRepository.getAllChecklistsFlow()
+            checklistRepository.getAllChecklistsWithTasksFlow()
                 .flowOn(Dispatchers.IO)
                 .collectLatest {
-                    _checklists.value = sortData(it)
+                    _checklists.value = it
                 }
         }
-    }
-
-    private fun sortData(data: List<ChecklistWithTask>): List<ChecklistWithTask> {
-        val sortedData = arrayListOf<ChecklistWithTask>()
-        data.forEach { checklist ->
-            val (match, other) = checklist.listTask.partition { !it.isMarked }
-            val concat = match.toCollection(arrayListOf())
-            concat.addAll(other)
-            sortedData.add(
-                ChecklistWithTask(
-                    checklist.id,
-                    checklist.title,
-                    checklist.description,
-                    checklist.isDone,
-                    checklist.createdAt,
-                    concat
-                )
-            )
-        }
-        return sortedData
     }
 
 }

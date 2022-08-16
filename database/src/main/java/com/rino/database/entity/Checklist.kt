@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity
-class Checklist(
+data class Checklist(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     @ColumnInfo(name = "title")

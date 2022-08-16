@@ -32,19 +32,16 @@
         tools:layout="@layout/fragment_calendar" />
 
     <fragment
-        android:id="@+id/navigation_settings"
-        android:name="com.example.notesvsshoppinglist.ui.settings.SettingsFragment"
-        android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings" />
+        android:id="@+id/navigation_about_app"
+        android:name="com.example.notesvsshoppinglist.ui.about.AboutAppFragment"
+        android:label="@string/title_about_app"
+        tools:layout="@layout/fragment_about_app" />
 
     <fragment
         android:id="@+id/navigation_add_notes"
         android:name="com.example.notesvsshoppinglist.ui.notes.EditNotesFragment"
         android:label="@string/title_add_notes"
         tools:layout="@layout/fragment_edit_notes">
-        <argument
-            android:name="notes"
-            app:argType="com.rino.database.entity.Note" />
     </fragment>
 
     <fragment
@@ -52,8 +49,5 @@
         android:name="com.example.notesvsshoppinglist.ui.checklist.EditChecklistFragment"
         android:label="@string/title_add_checklist"
         tools:layout="@layout/fragment_edit_checklist">
-        <argument
-            android:name="checklist"
-            app:argType="com.example.notesvsshoppinglist.core.model.ChecklistWithTask" />
     </fragment>
 </navigation>
