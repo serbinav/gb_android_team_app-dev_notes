@@ -24,25 +24,27 @@ class NavigationEspressoTest {
     @Test
     fun bottomNavigation_checklistFragmentClick() {
         onView(withId(R.id.navigation_checklist)).perform(click())
-        onView(withText("This is dashboard Fragment")).check(matches(isDisplayed()))
+        onView(withId(R.id.fab_checklist)).check(matches(isDisplayed()))
     }
 
     @Test
     fun bottomNavigation_notesFragmentClick() {
         onView(withId(R.id.navigation_notes)).perform(click())
-        onView(withText("This is home Fragment")).check(matches(isDisplayed()))
+        onView(withId(R.id.fab_notes)).check(matches(isDisplayed()))
     }
 
     @Test
     fun bottomNavigation_calendarFragmentClick() {
         onView(withId(R.id.navigation_calendar)).perform(click())
-        onView(withText("This is notifications Fragment")).check(matches(isDisplayed()))
+        onView(withId(R.id.image_view)).check(matches(isDisplayed()))
+        onView(withText("Under construction")).check(matches(isDisplayed()))
     }
 
     @Test
     fun bottomNavigation_settingsFragmentClick() {
-        onView(withId(R.id.navigation_settings)).perform(click())
-        onView(withText("This is Setting Fragment")).check(matches(isDisplayed()))
+        onView(withId(R.id.navigation_about_app)).perform(click())
+        onView(withId(R.id.image_view)).check(matches(isDisplayed()))
+        onView(withId(R.id.text_about)).check(matches(isDisplayed()))
     }
 
     @After
