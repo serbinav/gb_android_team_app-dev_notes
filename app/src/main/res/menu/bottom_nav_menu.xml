@@ -17,8 +17,8 @@
         android:title="@string/title_calendar" />
 
     <item
-        android:id="@+id/navigation_settings"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:title="@string/title_settings" />
+        android:id="@+id/navigation_about_app"
+        android:icon="@drawable/ic_baseline_info_24"
+        android:title="@string/title_about_app" />
 
 </menu>

@@ -6,12 +6,10 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.notesvsshoppinglist.EspressoUtils.hasCheckedItem
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-
 
 @RunWith(AndroidJUnit4::class)
 class NavigationEspressoTest {
@@ -25,26 +23,28 @@ class NavigationEspressoTest {
 
     @Test
     fun bottomNavigation_checklistFragmentClick() {
-        onView(withId(R.id.navigation_notes)).perform(click())
-        onView(withId(R.id.nav_view)).check(matches(hasCheckedItem(R.id.navigation_notes)))
+        onView(withId(R.id.navigation_checklist)).perform(click())
+        onView(withId(R.id.fab_checklist)).check(matches(isDisplayed()))
     }
 
     @Test
     fun bottomNavigation_notesFragmentClick() {
-        onView(withId(R.id.navigation_checklist)).perform(click())
-        onView(withId(R.id.nav_view)).check(matches(hasCheckedItem(R.id.navigation_checklist)))
+        onView(withId(R.id.navigation_notes)).perform(click())
+        onView(withId(R.id.fab_notes)).check(matches(isDisplayed()))
     }
 
     @Test
     fun bottomNavigation_calendarFragmentClick() {
         onView(withId(R.id.navigation_calendar)).perform(click())
-        onView(withId(R.id.nav_view)).check(matches(hasCheckedItem(R.id.navigation_calendar)))
+        onView(withId(R.id.image_view)).check(matches(isDisplayed()))
+        onView(withText("Under construction")).check(matches(isDisplayed()))
     }
 
     @Test
     fun bottomNavigation_settingsFragmentClick() {
-        onView(withId(R.id.navigation_settings)).perform(click())
-        onView(withId(R.id.nav_view)).check(matches(hasCheckedItem(R.id.navigation_settings)))
+        onView(withId(R.id.navigation_about_app)).perform(click())
+        onView(withId(R.id.image_view)).check(matches(isDisplayed()))
+        onView(withId(R.id.text_about)).check(matches(isDisplayed()))
     }
 
     @After
@@ -52,5 +52,3 @@ class NavigationEspressoTest {
         scenario.close()
     }
 }
-
-

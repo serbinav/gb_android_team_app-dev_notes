@@ -16,7 +16,7 @@ class ChecklistFragment :
 
     private val checklistAdapter: ChecklistAdapter by lazy {
         ChecklistAdapter { data ->
-            val bundle = bundleOf(CHECKLIST_BUNDLE to data)
+            val bundle = bundleOf(EditChecklistFragment.CHECKLIST_ID to data.checklist.id)
             findNavController()
                 .navigate(R.id.action_navigation_checklist_to_navigation_add_checklist, bundle)
         }
@@ -37,9 +37,5 @@ class ChecklistFragment :
             findNavController()
                 .navigate(R.id.action_navigation_checklist_to_navigation_add_checklist, null)
         }
-    }
-
-    companion object {
-        const val CHECKLIST_BUNDLE = "checklist"
     }
 }
