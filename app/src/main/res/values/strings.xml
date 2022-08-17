@@ -27,4 +27,5 @@
     <string name="alert_negative_btn">Отмена</string>
     <string name="action_edit">Изменить</string>
     <string name="action_del">Удалить</string>
+    <string name="add_note">Добавить заметку</string>
 </resources>
